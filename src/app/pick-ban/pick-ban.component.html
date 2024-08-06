@@ -1,0 +1,53 @@
+<section class="bg-gray-900">
+  <div class="flex flex-col">
+    <!--info-->
+    <div class="flex flex-row pt-8 pl-8 pr-8 rounded">
+      <div class="w-5/12">
+        <div class="text-6xl text-white">BLUE TEAM</div>
+      </div>
+      <div class="w-1/6 bg-gray-800">
+      </div>
+      <div class="w-5/12">
+        <div class="text-6xl text-white text-end" >RED TEAM</div>
+      </div>
+    </div>
+    <!--ban champion list-->
+    <div>
+
+    </div>
+    <div class="flex min-h-screen  text-white p-8">
+      <!-- Blue Team -->
+      <div class="w-1/4 p-4 mr-4 bg-gray-800 rounded">
+        <div *ngFor="let player of blueTeam" class="flex items-center mb-2">
+          <img [src]="player.image" alt="{{player.name}}" class="w-16 h-16 mr-2">
+          <div>{{player.name}}</div>
+        </div>
+      </div>
+  
+      <!-- Champion List -->
+      <div class="w-2/4 p-4 bg-gray-800 rounded">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-xl">챔피언 선택</div>
+          <input type="text" placeholder="챔피언 이름을 검색하세요" class="p-2 rounded bg-gray-700 text-white">
+        </div>
+        <div class="grid grid-cols-6 gap-2 overflow-y-auto" style="max-height: 500px;">
+          <div *ngFor="let champion of champions" class="flex flex-col items-center">
+            <img [src]="champion.image" alt="{{champion.name}}" class="w-16 h-16 mb-2">
+            <div class="text-sm">{{champion.name}}</div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Red Team -->
+      <div class="w-1/4 p-4 ml-4 bg-gray-800 rounded">
+        <div *ngFor="let player of redTeam" class="flex items-center mb-2 justify-end">
+          <div>{{player.name}}</div>
+          <img [src]="player.image" alt="{{player.name}}" class="w-16 h-16 ml-2">
+        </div>
+      </div>
+    </div>
+
+  <div class=""></div>
+  </div>
+  
+</section>
