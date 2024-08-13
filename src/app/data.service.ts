@@ -1,10 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Champion } from './champion.model';
+import { Player } from './player.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+
+  blueTeam: Player[] = [
+    new Player(1),
+    new Player(4),
+    new Player(5),
+    new Player(7),
+    new Player(10),
+  ];
+
+  redTeam: Player[] = [
+    new Player(2),
+    new Player(3),
+    new Player(6),
+    new Player(8),
+    new Player(9),
+  ];
+
+  getBlueTeamPlayers() {
+    return this.blueTeam;
+  }
+
+  getRedTeamPlayers() {
+    return this.redTeam;
+  }
+
+  // https://ddragon.leagueoflegends.com/cdn/14.15.1/data/ko_KR/champion.json
   champions: Champion[] = [ {
     "id" : "Aatrox",
     "key" : "266",

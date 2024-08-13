@@ -1,0 +1,9 @@
+.cursor-pointer { 
+    cursor: pointer;
+ }
+.selected { border: 2px solid wheat; }
+
+.disabled {
+    opacity: 0.2;  
+    pointer-events: none;
+  }
