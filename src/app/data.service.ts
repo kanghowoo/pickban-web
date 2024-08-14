@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Champion } from './champion.model';
 import { Player } from './player.model';
+import { Ban } from './ban.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,19 +9,35 @@ import { Player } from './player.model';
 export class DataService {
 
   blueTeam: Player[] = [
-    new Player(1),
-    new Player(4),
-    new Player(5),
     new Player(7),
     new Player(10),
+    new Player(11),
+    new Player(18),
+    new Player(19),
   ];
 
   redTeam: Player[] = [
-    new Player(2),
-    new Player(3),
-    new Player(6),
     new Player(8),
     new Player(9),
+    new Player(12),
+    new Player(17),
+    new Player(20),
+  ];
+
+  blueBan: Ban[] = [
+    new Ban(1),
+    new Ban(3),
+    new Ban(5),
+    new Ban(14),
+    new Ban(16),
+  ];
+
+  redBan: Ban[] = [
+    new Ban(2),
+    new Ban(4),
+    new Ban(6),
+    new Ban(13),
+    new Ban(15),
   ];
 
   getBlueTeamPlayers() {
@@ -29,6 +46,14 @@ export class DataService {
 
   getRedTeamPlayers() {
     return this.redTeam;
+  }
+
+  getBlueTeamBans() {
+    return this.blueBan;
+  }
+
+  getRedTeamBans() {
+    return this.redBan;
   }
 
   // https://ddragon.leagueoflegends.com/cdn/14.15.1/data/ko_KR/champion.json
