@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
+    './src/styles.css',
   ],
   theme: {
     extend: {
@@ -26,7 +27,13 @@ module.exports = {
       },
       fontSize: {
         '0.6rem': '0.6rem',
-      }
+      },
+      colors: {
+        championImg: '#1f1f22',
+        orderHeader: '#252236',
+        orderBorder: '#646078',
+        orderBody: '#463c64',
+      },
     },
   },
   plugins: [],
