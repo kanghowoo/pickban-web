@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Player } from './player.model';
 import { Champion } from './champion.model';
 
@@ -7,9 +7,6 @@ import { Champion } from './champion.model';
   providedIn: 'root'
 })
 export class ChampionService {
-  private champions: Champion[] = [];
-  private players: Player[] = [];
-
   private selectedPlayerSubject = new BehaviorSubject<Player | null>(null);
   private selectedChampionSubject = new BehaviorSubject<Champion | null>(null);
 
@@ -61,21 +58,7 @@ export class ChampionService {
 
       this.selectedChampionSubject.next(null);
       this.selectedPlayerSubject.next(null);
-    }
-    // if (this.selectedChampion) {
-
-    //   if (player.champion) {
-    //     const previousChampion = player.champion;
-    //     previousChampion.assignedTo = undefined;
-    //   }
-
-    //   player.champion = this.selectedChampion;
-    //   player.image = "/assets/img/champion/centered/" + this.selectedChampion.id + ".jpg";
-    //   this.selectedChampion.assignedTo = player;
-
-    //   this.selectedChampion = null;
-    //   console.log("champion select first good work");
-    // }    
+    }  
   }
 
   isChampionAvailable(champion: Champion): boolean {

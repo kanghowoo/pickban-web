@@ -1,0 +1,98 @@
+<div class="flex bg-gradient-to-bl from-white/40 to-orderBody h-36">
+    <!--match name -->
+    <div class="w-1/10 bg-orderHeader">
+    </div>
+    <!--pick-ban-order-->
+    <div class="w-9/10 h-36 flex flex-col">
+        <div class="flex-grow basis-0 border-b border-l border-violet-200/20 flex">
+            <div class="w-1/12 bg-orderHeader"></div> <!--team name-->
+            <div class="w-11/12 flex">
+            <div class="w-3/12 pl-9 flex justify-start items-center space-x-1.5">   
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': blueBan[0].champion}">
+                    <img [src]="blueBan[0].champion?.image"/>
+                </div>
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': blueBan[1].champion}">
+                    <img [src]="blueBan[1].champion?.image"/>
+                </div>
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': blueBan[2].champion}">
+                    <img [src]="blueBan[2].champion?.image"/>
+                </div>
+            </div>
+            <div class="w-4/12 pl-4 flex justify-start items-center space-x-1.5">
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="blueTeam[0].champion?.image"/>
+                </div>
+                <div class="w-16 h-16 invisible"></div>
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="blueTeam[1].champion?.image"/>
+                </div>
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="blueTeam[2].champion?.image"/>
+                </div>
+            </div>
+            <div class="w-2/12 pr-5 flex justify-end items-center space-x-1.5">
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': blueBan[3].champion}">
+                    <img [src]="blueBan[3].champion?.image"/>
+                </div>
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': blueBan[3].champion}">
+                    <img [src]="blueBan[4].champion?.image"/>
+                </div>
+            </div>
+            <div class="w-3/12 flex justify-end items-center space-x-1.5">
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="blueTeam[3].champion?.image"/>
+                </div>
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="blueTeam[4].champion?.image"/>
+                </div>
+                <div class="w-16 h-16 invisible"></div>
+            </div>
+            </div>
+        </div>
+        <div class="flex-grow basis-0 border-l border-violet-200/20 flex">
+            <div class="w-1/12 bg-orderHeader"></div> <!--team name-->
+            <div class="w-11/12 flex">
+            <div class="w-3/12 pr-9 flex justify-end items-center space-x-1.5">
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': redBan[0].champion}">
+                    <img [src]="redBan[0].champion?.image"/>
+                </div>
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': redBan[1].champion}">
+                    <img [src]="redBan[1].champion?.image"/>
+                </div>
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': redBan[2].champion}">
+                    <img [src]="redBan[2].champion?.image"/>
+                </div>
+            </div>
+            <div class="w-4/12 pr-4 flex justify-end items-center space-x-1.5">
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="redTeam[0].champion?.image"/>
+                </div>
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="redTeam[1].champion?.image"/>
+                </div>
+                <div class="w-16 h-16 invisible"></div>
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="redTeam[2].champion?.image"/>
+                </div>
+            </div>
+            <div class="w-2/12 pl-5 flex justify-start items-center space-x-1.5">
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': redBan[3].champion}">
+                    <img [src]="redBan[3].champion?.image"/>
+                </div>
+                <div class="w-12 h-12 border-guideline-violet" [ngClass]="{'diagonal-line': redBan[4].champion}">
+                    <img [src]="redBan[4].champion?.image"/>
+                </div>
+            </div>
+            <div class="w-3/12 pl-4 flex justify-start items-center space-x-1.5">
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="redTeam[3].champion?.image"/>
+                </div>
+                <div class="w-16 h-16 invisible"></div>
+                <div class="w-16 h-16 border-guideline-violet">
+                    <img [src]="redTeam[4].champion?.image"/>
+                </div>
+            </div>        
+            </div>
+        </div>
+    </div>
+</div>

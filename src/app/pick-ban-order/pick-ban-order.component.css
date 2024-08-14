@@ -1,0 +1,7 @@
+/* styles.css */
+.border-guideline {
+    border-style: dotted;
+    border-width: 1px;
+    border-color: rgba(221 214 254 / 0.5); /* 불투명한 색상 */
+  }
+  
