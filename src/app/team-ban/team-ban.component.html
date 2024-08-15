@@ -1,0 +1,21 @@
+<div [ngClass]="{
+    'flex-row': team === 'red',
+    'flex-row-reverse': team === 'blue',
+}">
+    <ng-container *ngFor="let ban of bans; let i = index">
+        <div class="w-14 h-14 bg-gray-800 cursor-pointer"
+        (click)="selectBan(ban)"
+        [ngClass]="{
+            'selectedBlue': isSelectedBlue(ban),
+            'selectedRed': isSelectedRed(ban),
+        }"
+        [class.diagonal-line]= ban.champion
+        >
+            <img [src]="ban.champion?.image"/>
+        </div>
+
+        <div *ngIf="i === 2" class="w-2 h-14 bg-gray-700 mx-0.5">
+        </div> 
+    </ng-container>
+</div>
+ 

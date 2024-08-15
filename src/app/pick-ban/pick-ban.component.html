@@ -1,37 +1,38 @@
 <section class="bg-gray-900 min-h-screen">
   <div class="flex flex-col max-w-screen-xl mx-auto">
-    <!--info-->
-    <div class="flex flex-row pt-8 pl-8 pr-8 rounded">
-      <div class="w-5/12">
-        <div class="text-6xl text-white">BLUE TEAM</div>
+    <div class="flex flex-row pt-4 pl-4 pr-4 rounded">
+      <!-- blue ban champion list -->
+      <div class="w-1/4">
+        <app-team-ban [bans]="blueBans" team="blue">
+        </app-team-ban>
       </div>
-      <div class="w-1/6 bg-gray-800">
+      <!-- info -->
+      <div class="w-2/4 rounded  bg-gray-800 mx-4">
       </div>
-      <div class="w-5/12">
-        <div class="text-6xl text-white text-end" >RED TEAM</div>
+      <!-- red ban champion list -->
+      <div class="w-1/4">
+        <app-team-ban [bans]="redBans" team="red">
+        </app-team-ban>
       </div>
-    </div>
-    <!-- ban champion list -->
-    <div>
     </div>
     <!-- pick -->
     <div class="flex  text-white p-4">
       <!-- Blue Team -->
       <div class="w-1/4 mr-4">
         <app-team-player
-        [team]="blueTeam">
+        [players]="bluePlayers" team="blue">
         </app-team-player>
       </div>
 
       <!-- Champion List -->
-      <div class="w-2/4 h-540px min-w-480px p-4 bg-gray-800 rounded">
+      <div class="w-2/4 min-w-480px p-4 bg-gray-800 rounded">
         <app-champion-list></app-champion-list>
       </div>
   
       <!-- Red Team -->    
       <div class="w-1/4 ml-4">
         <app-team-player
-        [team]="redTeam">
+        [players]="redPlayers" team="red">
         </app-team-player>
       </div>
     </div>

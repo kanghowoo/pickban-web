@@ -1,8 +1,12 @@
-<div class="block bg-gray-800 space-y-0.5">
-    <div *ngFor="let player of team" class="relative flex-grow h-108px items-center cursor-pointer overflow-hidden"
+<div class="block space-y-0.5">
+    <div *ngFor="let player of players; let i = index" class="relative flex-grow h-108px items-center cursor-pointer overflow-hidden bg-gray-800"
         (click)="selectPlayer(player)"
-        [class.selected]="isSelected(player)">
-        <img [src]="player.image" alt="{{player.champion?.id}}" class="w-full h-full object-cover">
+        [ngClass]="{
+            'selectedBlue': isSelectedBlue(player),
+            'selectedRed': isSelectedRed(player),
+        }"
+        >
+        <img *ngIf="player.image" [src]="player.image" alt="{{player.champion?.id}}" class="w-full h-full object-cover">
         <div class="absolute bottom-0 left-0 right-0 p-2 text-white text-left text-lg">
             {{player.champion?.id}}
         </div>

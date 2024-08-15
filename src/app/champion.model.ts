@@ -1,3 +1,4 @@
+import { Ban } from "./ban.model";
 import { Player } from "./player.model";
 
 export class Champion {
@@ -6,6 +7,6 @@ export class Champion {
         public key: string,
         public name: string,
         public image: string,
-        public assignedTo?: Player,
+        public assignedTo?: Player | Ban,
     ){}
 }

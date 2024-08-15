@@ -1,0 +1,14 @@
+.flex-row {
+    display:flex;
+    flex-direction: row;
+    gap: 0.125rem;
+}
+
+.flex-row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.125rem;
+}
+
+.selectedBlue { border: 0.125rem solid blue; }
+.selectedRed { border: 0.125rem solid red; }

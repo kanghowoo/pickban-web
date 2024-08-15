@@ -11,7 +11,8 @@ import { ChampionService } from '../champion.service';
   styleUrl: './team-player.component.css'
 })
 export class TeamPlayerComponent implements OnInit {
-  @Input() team: Player[] = [];
+  @Input() players: Player[] = [];
+  @Input() team!: string;
 
   selectedPlayer: Player | null = null;
 
@@ -28,7 +29,11 @@ export class TeamPlayerComponent implements OnInit {
     this.championService.onPlayerSelect(player);
   }
 
-  isSelected(player: Player): boolean {
-    return player === this.selectedPlayer;
+  isSelectedBlue(player: Player): boolean {
+    return player === this.selectedPlayer && this.team === 'blue';
+  }
+
+  isSelectedRed(player: Player): boolean {
+    return player === this.selectedPlayer && this.team === 'red';
   }
 }

@@ -1,2 +1,3 @@
 .cursor-pointer { cursor: pointer; }
-.selected { border: 2px solid yellow; }
+.selectedBlue { border: 0.125rem solid blue; }
+.selectedRed { border: 0.125rem solid red; }
