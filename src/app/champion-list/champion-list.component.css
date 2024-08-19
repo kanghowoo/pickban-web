@@ -7,3 +7,9 @@
     opacity: 0.2;  
     pointer-events: none;
   }
+
+  .custom-spinner .mat-spinner {
+    border-color: rgba(0, 0, 0, 0.2);
+    border-top-color: #646078;
+  }
+  

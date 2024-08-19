@@ -1,27 +1,39 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Champion } from '../champion.model';
 import { ChampionService } from '../champion.service';
-import { DataService } from '../data.service';
+import { debounceTime, startWith, Subject, switchMap } from 'rxjs';
+import { ChampionSearchService } from '../champion-search.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-champion-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, MatProgressSpinnerModule],
   templateUrl: './champion-list.component.html',
-  styleUrl: './champion-list.component.css'
+  styleUrl: './champion-list.component.css',
 })
 export class ChampionListComponent implements OnInit {
-  champions: Champion[] = [];
+  champions$ = this.championSearchService.champions$;
+
   selectedChampion: Champion | null = null;
+  searchTerm = new Subject<string>();
 
   constructor(
     private championService: ChampionService,
-    private dataService: DataService,
+    private championSearchService: ChampionSearchService,
   ) {}
 
   ngOnInit(): void {
-    this.champions = this.dataService.getChampions();
+    this.champions$ = this.searchTerm.pipe(
+      startWith(''),
+      debounceTime(100),
+      switchMap(term => this.championSearchService.searchChampions(term))
+    );
+
+    this.searchTerm.next('');
+
     this.championService.selectedChampion$.subscribe(champion => {
       this.selectedChampion = champion;
     });
@@ -29,12 +41,9 @@ export class ChampionListComponent implements OnInit {
 
   selectChampion(champion: Champion) {
     if (this.isChampionAvailable(champion)) {
-      //this.selectedChampion = champion;
       this.championService.selectChampion(champion);
       this.championService.onChampionSelect(champion);
     }
-    // this.selectedChampion = champion;
-    // this.championSelected.emit(champion);
   }
 
   isChampionAvailable(champion: Champion): boolean {
@@ -45,4 +54,13 @@ export class ChampionListComponent implements OnInit {
     return this.selectedChampion === champion 
             && this.isChampionAvailable(champion);
   }
+
+  onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input) {
+      console.log('Search input value:', input.value); // 추가
+      this.searchTerm.next(input.value);
+    }
+  }
+  
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Champion } from './champion.model';
 import { Player } from './player.model';
 import { Ban } from './ban.model';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,7 @@ export class DataService {
   }
 
   // https://ddragon.leagueoflegends.com/cdn/14.15.1/data/ko_KR/champion.json
-  champions: Champion[] = [ {
+  initChampions: Champion[] = [ {
     "id" : "Aatrox",
     "key" : "266",
     "name" : "아트록스",
@@ -899,7 +900,11 @@ export class DataService {
     "image" : "assets/img/champion/Zyra.png"
   } ];
 
-  getChampions() {
-    return this.champions;
+  getChampions(): Observable<Champion[]> {
+    return of(this.initChampions);
+  }
+
+  getChampionsSortedByName(): Champion[] {
+    return this.initChampions.sort((a,b) => a.name.localeCompare(b.name, 'ko'));
   }
 }

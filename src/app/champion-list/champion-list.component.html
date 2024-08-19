@@ -1,13 +1,21 @@
 <div class="flex justify-between items-center mb-4">
     <div class="text-ms">챔피언 선택</div>
-    <input type="text" placeholder="챔피언 이름을 검색하세요" class="p-2 rounded bg-gray-700 text-white">
+    <input type="text" (input)="onSearch($event)" placeholder="챔피언 이름을 검색하세요" class="p-2 rounded bg-gray-700 text-white">
 </div>
-<div class="flex flex-wrap items-center gap-6 overflow-y-auto h-460px">
-    <div *ngFor="let champion of champions" class="flex flex-col items-center cursor-pointer"
-        (click) = "selectChampion(champion)"
-        [class.disabled] = "!isChampionAvailable(champion)">
-        <img [src]="champion.image" alt="" class="w-18 h-18 mb-1"
+<div class="flex flex-wrap gap-6 overflow-y-auto h-460px">
+    <ng-container *ngIf="champions$ | async as champions; else loading">
+        <div *ngFor="let champion of champions" 
+            class="flex flex-col items-center cursor-pointer"
+            (click) = "selectChampion(champion)"
+            [class.disabled] = "!isChampionAvailable(champion)">
+            <img [src]="champion.image" alt="" class="w-18 h-18 mb-1"
             [class.selected] = "isSelected(champion)">
-        <div class="text-0.6rem">{{champion.name}}</div>
-    </div>
+            <div class="text-0.6rem">{{champion.name}}</div>
+        </div>        
+    </ng-container>
+    <ng-template #loading>
+        <div class="flex justify-center items-center w-full h-full">
+            <mat-spinner [diameter]="40" class="custom-spinner"></mat-spinner>
+        </div>
+    </ng-template>
 </div>
