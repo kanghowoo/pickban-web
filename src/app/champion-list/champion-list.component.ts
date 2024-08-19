@@ -6,11 +6,12 @@ import { ChampionService } from '../champion.service';
 import { debounceTime, startWith, Subject, switchMap } from 'rxjs';
 import { ChampionSearchService } from '../champion-search.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-champion-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatProgressSpinnerModule],
+  imports: [CommonModule, FormsModule, MatProgressSpinnerModule, MatIconModule],
   templateUrl: './champion-list.component.html',
   styleUrl: './champion-list.component.css',
 })
