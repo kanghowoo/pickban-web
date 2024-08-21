@@ -12,14 +12,14 @@
             class="flex flex-col items-center cursor-pointer"
             (click) = "selectChampion(champion)"
             [class.disabled] = "!isChampionAvailable(champion)">
-            <img [src]="champion.image" alt="" class="w-18 h-18 mb-1"
+            <img [src]="champion.image" alt="" class="w-16 h-16 mb-1"
             [class.selected] = "isSelected(champion)">
-            <div class="text-0.6rem">{{champion.name}}</div>
+            <div class="text-0.6rem text-center w-16 truncate">{{champion.name}}</div>
         </div>        
     </ng-container>
     <ng-template #loading>
         <div class="flex justify-center items-center w-full h-full">
-            <mat-spinner [diameter]="40" class="custom-spinner"></mat-spinner>
+            <mat-spinner [diameter]="40" color="primary"></mat-spinner>
         </div>
     </ng-template>
 </div>
