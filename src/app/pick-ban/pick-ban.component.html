@@ -2,15 +2,16 @@
   <div class="flex flex-col max-w-screen-xl mx-auto">
     <div class="flex flex-row justify-center pt-4 pl-4 pr-4 rounded">
       <!-- blue ban champion list -->
-      <div class="w-1/4">
+      <div class="min-w-80 max-w-80">
         <app-team-ban [bans]="blueBans" team="blue">
         </app-team-ban>
       </div>
       <!-- info -->
       <div class="w-2/4 rounded min-w-champioin-list max-w-champion-list bg-orderHeader mx-4">
+        <app-match-info></app-match-info>
       </div>
       <!-- red ban champion list -->
-      <div class="w-1/4">
+      <div class="min-w-80 max-w-80">
         <app-team-ban [bans]="redBans" team="red">
         </app-team-ban>
       </div>
@@ -18,19 +19,19 @@
     <!-- pick -->
     <div class="flex justify-center text-white p-4">
       <!-- Blue Team -->
-      <div class="w-1/4 mr-4">
+      <div class="mr-4 min-w-80 max-w-80">
         <app-team-player
         [players]="bluePlayers" team="blue">
         </app-team-player>
       </div>
 
       <!-- Champion List -->
-      <div class="w-2/4 min-w-champioin-list max-w-champion-list p-4 bg-gray-800 rounded">
+      <div class="w-2/4 min-w-champioin-list max-w-champion-list pl-5 pt-2 bg-gray-800">
         <app-champion-list></app-champion-list>
       </div>
   
       <!-- Red Team -->    
-      <div class="w-1/4 ml-4">
+      <div class="ml-4 min-w-80 max-w-80">
         <app-team-player
         [players]="redPlayers" team="red">
         </app-team-player>
@@ -38,7 +39,7 @@
     </div>
     
     <!--result-->
-    <div class="p-4">
+    <div class="flex justify-center">
       <app-pick-ban-order #pickBanOrder></app-pick-ban-order>
     </div>
   </div>
