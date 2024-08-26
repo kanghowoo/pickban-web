@@ -10,5 +10,22 @@
     gap: 0.325rem;
 }
 
-.selectedBlue { border: 0.125rem solid blue; }
-.selectedRed { border: 0.125rem solid red; }
+.ban-bg-blue {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    background-color: rgb(29 78 216);
+}
+
+.ban-bg-red {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    background-color: rgb(185 28 28);
+
+}
+
+.selectedBlue { border: 0.125rem solid rgb(29 78 216); }
+.selectedRed { border: 0.125rem solid rgb(185 28 28); }

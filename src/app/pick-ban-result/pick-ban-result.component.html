@@ -1,0 +1,136 @@
+<div class="flex bg-gradient-to-bl from-white/40 to-orderBody 
+    h-36 min-w-pick-ban-result max-w-pick-ban-result">
+    <!--match name -->
+    <div class="w-1/12 bg-orderHeader">
+    </div>
+    <!--pick-ban-result-->
+    <div class="w-11/12 h-36 flex flex-col">
+        <!--blue team result-->
+        <div class="flex-grow basis-0 border-b border-l border-violet-200/20 flex">
+            <div class="w-1/12 bg-orderHeader"></div> <!--team name-->
+            <div class="w-11/12 flex">
+            <!--blue ban 3-->
+                <div class="w-3/12 pl-9 flex justify-start items-center space-x-1.5">   
+                    <div *ngFor="let ban of blueBans | slice:0:3; let i = index"
+                        class="w-12 h-12 flex justify-center items-center"
+                        [ngClass]="{
+                            'border-guideline-blue': !ban.champion,
+                            'diagonal-line': ban.champion
+                        }">
+                        <img [src]="ban.champion?.image"/>
+                        <span [ngClass]="{
+                            'hidden': ban.champion
+                        }" class="text-blue-900">BAN{{i + 1}}</span>
+                    </div>
+                </div>
+                <!--blue pick 3-->
+                <div class="w-4/12 pl-4 flex justify-start items-center space-x-1.5">
+                    <ng-container *ngFor="let player of bluePlayers | slice:0:3; let i = index">
+                        <div class="w-16 h-16 flex justify-center items-center"
+                            [ngClass]="{
+                                'border-guideline-blue': !player.champion
+                            }">
+                            <img *ngIf="player.champion" [src]="player.champion.image"/>
+                            <span [ngClass]="{
+                                'hidden': player.champion
+                            }" class="text-blue-900">B{{i + 1}}</span>
+                        </div>
+                        <div *ngIf="i === 0" class="w-16 h-16 invisible"></div>
+                    </ng-container>
+                </div>
+                <!-- blue ban 2-->
+                <div class="w-2/12 pr-5 flex justify-end items-center space-x-1.5">
+                    <div *ngFor="let ban of blueBans | slice:3:5; let i = index"
+                        class="w-12 h-12 flex justify-center items-center"
+                        [ngClass]="{
+                            'border-guideline-blue': !ban.champion,
+                            'diagonal-line': ban.champion
+                        }">
+                        <img [src]="ban.champion?.image"/>
+                        <span [ngClass]="{
+                            'hidden': ban.champion
+                        }" class="text-blue-900">BAN{{i + 4}}</span>                    
+                    </div>
+                </div>
+                <!-- blue pick2-->
+                <div class="w-3/12 flex justify-end items-center space-x-1.5">
+                    <ng-container *ngFor="let player of bluePlayers | slice:3:5; let i = index">                
+                        <div class="w-16 h-16 flex justify-center items-center"
+                            [ngClass]="{
+                                'border-guideline-blue': !player.champion,
+                        }">
+                            <img [src]="player.champion?.image"/>
+                            <span [ngClass]="{
+                                'hidden': player.champion
+                            }" class="text-blue-900">B{{i + 4}}</span>
+                        </div>
+                        <div *ngIf="i === 1" class="w-16 h-16 invisible"></div>
+                    </ng-container>    
+                </div>
+            </div>
+        </div>
+        <!--red team result-->
+        <div class="flex-grow basis-0 border-l border-violet-200/20 flex">
+            <div class="w-1/12 bg-orderHeader"></div> <!--team name-->
+            <div class="w-11/12 flex">
+                <div class="w-3/12 pr-9 flex justify-end items-center space-x-1.5">
+                    <div *ngFor="let ban of redBans | slice:0:3; let i = index"
+                        class="w-12 h-12 flex justify-center items-center"
+                        [ngClass]="{
+                            'border-guideline-red': !ban.champion,
+                            'diagonal-line': ban.champion
+                        }">
+                        <img [src]="ban.champion?.image"/>
+                        <span [ngClass]="{
+                            'hidden': ban.champion
+                        }" class="text-red-900">BAN{{i + 1}}</span>                         
+                    </div>
+                </div>
+                <!--blue pick 3-->
+                <div class="w-4/12 pr-4 flex justify-start items-center space-x-1.5">
+                    <ng-container *ngFor="let player of redPlayers | slice:0:3; let i = index">
+                        <div class="w-16 h-16 flex justify-center items-center"
+                            [ngClass]="{
+                                'border-guideline-red': !player.champion
+                            }">
+                            <img *ngIf="player.champion" [src]="player.champion.image"/>
+                            <span [ngClass]="{
+                                'hidden': player.champion
+                            }" class="text-red-900">R{{i + 1}}</span>
+                        </div>
+                        <div *ngIf="i === 1" class="w-16 h-16 invisible"></div>
+                    </ng-container>
+                </div>
+                <!--red ban 2-->
+                <div class="w-2/12 pl-5 flex justify-start items-center space-x-1.5">
+                    <div *ngFor="let ban of redBans | slice:3:5; let i = index"
+                    class="w-12 h-12 flex justify-center items-center"
+                    [ngClass]="{
+                        'border-guideline-red': !ban.champion,
+                        'diagonal-line': ban.champion
+                    }">
+                        <img [src]="ban.champion?.image"/>
+                        <span [ngClass]="{
+                            'hidden': ban.champion
+                        }" class="text-red-900">BAN{{i + 4}}</span>                       
+                    </div>
+                </div>
+                <!--red pick 2-->
+                <div class="w-3/12 pl-4 flex justify-start items-center space-x-1.5">
+                    <ng-container *ngFor="let player of redPlayers | slice:3:5; let i = index">
+                        <div class="w-16 h-16 flex justify-center items-center" [ngClass]="{
+                            'border-guideline-red': !player.champion,
+                        }">
+                            <img [src]="player.champion?.image"/>
+                            <span [ngClass]="{
+                                'hidden': player.champion
+                            }" class="text-red-900">R{{i + 4}}</span>                        
+                        </div>
+                        <div *ngIf="i === 0" class="w-16 h-16 invisible"></div>
+                    </ng-container>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,18 +3,24 @@
     'flex-row-reverse': team === 'blue',
 }">
     <ng-container *ngFor="let ban of bans; let i = index">
-        <div class="w-14 h-14 bg-gray-800 cursor-pointer flex items-center justify-center"
-        (click)="selectBan(ban)"
-        [ngClass]="{
-            'selectedBlue': isSelectedBlue(ban),
-            'selectedRed': isSelectedRed(ban),
-        }"
-        [class.diagonal-line]= ban.champion
-        >
-            <img *ngIf="ban.champion" [src]="ban.champion.image" class="w-full object-cover"/>
+        <div [ngClass]="{
+            'ban-bg-red': team === 'red',
+            'ban-bg-blue': team === 'blue',
+        }">
+            <div class="w-14 h-14 bg-gray-800 cursor-pointer flex items-center justify-center"
+            (click)="selectBan(ban)"
+            [ngClass]="{
+                'selectedBlue': isSelectedBlue(ban),
+                'selectedRed': isSelectedRed(ban),
+            }"
+            [class.diagonal-line]= ban.champion
+            >
+                <img *ngIf="ban.champion" [src]="ban.champion.image" class="w-full object-cover"/>
+            </div>
+            <div class="text-sm items-center text-center text-white">BAN{{(i + 1)}}</div>            
         </div>
 
-        <div *ngIf="i === 2" class="w-0.5 h-14 bg-gray-800 mx-1">
+        <div *ngIf="i === 2" class="w-0.5 h-20 bg-orderBorder mx-1">
         </div> 
     </ng-container>
 </div>

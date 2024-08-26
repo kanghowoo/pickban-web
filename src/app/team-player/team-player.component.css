@@ -1,3 +1,15 @@
+.player-bg-blue {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(29, 78, 216);
+}
+
+.player-bg-red {
+    flex-direction: row-reverse;
+    align-items: center;
+    background-color: rgb(185 28 28);
+}
+
 .cursor-pointer { cursor: pointer; }
-.selectedBlue { border: 0.125rem solid blue; }
-.selectedRed { border: 0.125rem solid red; }
+.selectedBlue { border: 0.125rem solid rgb(29 78 216); }
+.selectedRed { border: 0.125rem solid rgb(185 28 28); }

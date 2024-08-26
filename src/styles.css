@@ -21,8 +21,18 @@
 
 .border-guideline-violet {
     border-style: dotted;
-    border-width: 1px;
-    border-color: rgba(221 214 254 / 0.5); /* 불투명한 색상 */
+    border-width: 0.125rem;
+    border-color: rgba(221, 214, 254, 0.5); /* 불투명한 색상 */
+}
+
+.border-guideline-blue {
+    border-width: 0.125rem;
+    border-color: rgba(29, 78, 216, 0.7);
+}
+
+.border-guideline-red {
+    border-width: 0.125rem;
+    border-color: rgba(185, 28, 28, 0.6);
 }
 
 html, body { height: 100%; }

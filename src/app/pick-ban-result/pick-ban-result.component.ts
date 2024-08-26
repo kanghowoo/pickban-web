@@ -6,11 +6,11 @@ import { Champion } from '../champion.model';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'app-pick-ban-order',
+  selector: 'app-pick-ban-result',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './pick-ban-order.component.html',
-  styleUrl: './pick-ban-order.component.css',
+  templateUrl: './pick-ban-result.component.html',
+  styleUrl: './pick-ban-result.component.css',
 })
 export class PickBanOrderComponent implements OnInit {
 
@@ -22,11 +22,11 @@ export class PickBanOrderComponent implements OnInit {
   selectedPlayer: Player | null = null;
   selectedChampion: Champion | null = null;
 
-  blueTeam = this.dataService.getBlueTeamPlayers();
-  redTeam = this.dataService.getRedTeamPlayers();
+  bluePlayers = this.dataService.getBlueTeamPlayers();
+  redPlayers = this.dataService.getRedTeamPlayers();
   
-  blueBan = this.dataService.getBlueTeamBans();
-  redBan = this.dataService.getRedTeamBans();
+  blueBans = this.dataService.getBlueTeamBans();
+  redBans = this.dataService.getRedTeamBans();
 
   ngOnInit(): void {
     this.championService.selectedChampion$.subscribe(champion => {

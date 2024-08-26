@@ -16,12 +16,18 @@ export class TeamPlayerComponent implements OnInit {
 
   selectedPlayer: Player | null = null;
 
+  isBlueTeam: boolean = false;
+  isRedTeam : boolean = false;
+
   constructor(private championService: ChampionService) {}
 
   ngOnInit(): void {
     this.championService.selectedPlayer$.subscribe(player => {
       this.selectedPlayer = player;
     });
+
+    this.isBlueTeam = this.team === 'blue';
+    this.isRedTeam = this.team === 'red';
   }
 
   selectPlayer(player: Player) {
@@ -30,10 +36,18 @@ export class TeamPlayerComponent implements OnInit {
   }
 
   isSelectedBlue(player: Player): boolean {
-    return player === this.selectedPlayer && this.team === 'blue';
+    return player === this.selectedPlayer && this.isBlueTeam;
   }
 
   isSelectedRed(player: Player): boolean {
-    return player === this.selectedPlayer && this.team === 'red';
+    return player === this.selectedPlayer && this.isRedTeam;
   }
+
+  getTeamPlayerNumber(seq: Number): string {
+    if (this.isRedTeam) return 'R' + seq;
+    if (this.isBlueTeam) return 'B' + seq;
+    
+    return '';
+  }
+
 }

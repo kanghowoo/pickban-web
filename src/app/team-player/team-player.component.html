@@ -1,15 +1,22 @@
 <div class="block space-y-0.5">
     <ng-container *ngFor="let player of players; let i = index">
-        <div class="relative flex-grow h-108px items-center cursor-pointer overflow-hidden bg-gray-800"
-        (click)="selectPlayer(player)"
-        [ngClass]="{
-            'selectedBlue': isSelectedBlue(player),
-            'selectedRed': isSelectedRed(player),
-        }">
-            <img *ngIf="player.image" [src]="player.image" alt="{{player.champion?.id}}" class="w-full h-full object-cover">
-            <div class="absolute bottom-0 left-0 right-0 p-2 text-white text-left text-lg">
-                {{player.champion?.id}}
-            </div>
+        <div class="flex" 
+            [ngClass]="{
+                'player-bg-red': isRedTeam,
+                'player-bg-blue': isBlueTeam,
+            }">
+            <div class="text-base flex-grow text-center">{{getTeamPlayerNumber(i + 1)}}</div>
+            <div class="relative w-72 h-108px items-center cursor-pointer overflow-hidden bg-gray-800"
+            (click)="selectPlayer(player)"
+            [ngClass]="{
+                'selectedBlue': isSelectedBlue(player),
+                'selectedRed': isSelectedRed(player),
+            }">
+                <img *ngIf="player.image" [src]="player.image" alt="{{player.champion?.id}}" class="w-full h-full object-cover">
+                <div class="absolute bottom-0 left-0 right-0 p-2 text-white text-right text-lg">
+                    {{player.champion?.id}}
+                </div>
+            </div>            
         </div>
         <div *ngIf="i === 2" class="relative w-full h-1 bg-gray-900">
         </div>
