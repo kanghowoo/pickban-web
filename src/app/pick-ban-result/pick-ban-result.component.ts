@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Player } from '../player.model';
-import { ChampionService } from '../champion.service';
-import { Champion } from '../champion.model';
 import { DataService } from '../data.service';
+import { ResultService } from '../result.service';
 
 @Component({
   selector: 'app-pick-ban-result',
@@ -14,13 +12,12 @@ import { DataService } from '../data.service';
 })
 export class PickBanOrderComponent implements OnInit {
 
+  matchName: string = '';
+
   constructor(
-    private championService: ChampionService,
     private dataService: DataService,
+    private resultService: ResultService,
   ) {}
-  
-  selectedPlayer: Player | null = null;
-  selectedChampion: Champion | null = null;
 
   bluePlayers = this.dataService.getBlueTeamPlayers();
   redPlayers = this.dataService.getRedTeamPlayers();
@@ -29,13 +26,9 @@ export class PickBanOrderComponent implements OnInit {
   redBans = this.dataService.getRedTeamBans();
 
   ngOnInit(): void {
-    this.championService.selectedChampion$.subscribe(champion => {
-      this.selectedChampion = champion;
-    });
-
-    this.championService.selectedPlayer$.subscribe(player => {
-      this.selectedPlayer = player;
-    });
+    this.resultService.matchNameSubject$.subscribe(name => {
+      this.matchName = name;
+    })
   }
 
 }

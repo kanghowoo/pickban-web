@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TeamPlayerComponent } from "../team-player/team-player.component";
 import { ChampionListComponent } from "../champion-list/champion-list.component";
-import { PickBanOrderComponent } from "../pick-ban-order/pick-ban-order.component";
+import { PickBanOrderComponent } from "../pick-ban-result/pick-ban-result.component";
 import { DataService } from '../data.service';
 import { TeamBanComponent } from "../team-ban/team-ban.component";
 import { MatchInfoComponent } from "../match-info/match-info.component";
