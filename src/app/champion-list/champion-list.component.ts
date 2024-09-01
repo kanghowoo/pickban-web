@@ -33,8 +33,6 @@ export class ChampionListComponent implements OnInit {
       switchMap(term => this.championSearchService.searchChampions(term))
     );
 
-    this.searchTerm.next('');
-
     this.championService.selectedChampion$.subscribe(champion => {
       this.selectedChampion = champion;
     });
@@ -59,7 +57,6 @@ export class ChampionListComponent implements OnInit {
   onSearch(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input) {
-      console.log('Search input value:', input.value); // 추가
       this.searchTerm.next(input.value);
     }
   }

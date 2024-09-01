@@ -11,7 +11,7 @@
             class="w-52 pt-2 justify-center bg-inherit border-b outline-none
                 text-white text-center text-sm placeholder:text-gray-400/75
                 whitespace-nowrap overflow-visible text-ellipsis"
-            [maxLength]="maxLength"
+            [maxLength]="nameMaxLength"
         />
 
         <mat-icon
@@ -34,22 +34,23 @@
         <div class="flex items-center space-x-2">
             <div class="w-24">
                 <select [(ngModel)]="selectedBlueTeamLeague" 
-                        (ngModelChange)="onLeagueChange1()" 
+                        (ngModelChange)="onBlueSideLeagueChange()" 
                         class="my-1 block w-full p-1.5 text-center text-white border-b bg-inherit
-                            outline-none focus:ring-indigo-500 sm:text-sm cursor-pointer">
-                    <option value="">리그 선택</option>
-                    <option *ngFor="let league of leagues" [value]="league.name">{{ league.name }}</option>
+                            outline-none sm:text-sm cursor-pointer">
+                    <option [ngValue]="null">리그 선택</option>
+                    <option *ngFor="let league of leagues" [ngValue]="league">{{ league.keyName }}</option>
                 </select>
             </div>
-            <div class="w-24">
+            <div class="w-24"
+                [hidden]="!blueTeams.length">
                 <select
                     [(ngModel)]="selectedBlueTeam"
-                    [disabled]="!blueTeams.length"
+                    (ngModelChange)="updateBlueSideTeam()"
                     [ngClass]="{'cursor-not-allowed': !blueTeams.length}"
                     class="my-1 block w-full p-1.5 text-center text-white border-b bg-inherit
-                        outline-none focus:ring-indigo-500 sm:text-sm cursor-pointer">
-                    <option value ="">팀 선택</option>    
-                    <option *ngFor="let team of blueTeams" [value]="team">{{ team }}</option>
+                        outline-none sm:text-sm cursor-pointer">
+                    <option [ngValue]="null">팀 선택</option>    
+                    <option *ngFor="let team of blueTeams" [ngValue]="team">{{ team.keyName }}</option>
                 </select>
             </div>
         </div>
@@ -59,22 +60,23 @@
         <div class="flex flex-row-reverse space-x-2 space-x-reverse">
             <div class="w-24">
                 <select [(ngModel)]="selectedRedTeamLeague" 
-                        (ngModelChange)="onLeagueChange2()" 
+                        (ngModelChange)="onRedSideLeagueChange()" 
                         class="my-1 block w-full p-1.5 text-center text-white border-b bg-inherit
-                            outline-none focus:ring-red-500 sm:text-sm cursor-pointer">
-                    <option value="">리그 선택</option>     
-                    <option *ngFor="let league of leagues" [value]="league.name">{{ league.name }}</option>
+                            outline-none sm:text-sm cursor-pointer">
+                    <option [ngValue]="null">리그 선택</option>     
+                    <option *ngFor="let league of leagues" [ngValue]="league">{{ league.keyName }}</option>
                 </select>
             </div>
-            <div class="w-24">
+            <div class="w-24"
+                [hidden]="!redTeams.length">
                 <select
                     [(ngModel)]="selectedRedTeam"
-                    [disabled]="!redTeams.length"
+                    (ngModelChange)="updateRedSideTeam()"
                     [ngClass]="{'cursor-not-allowed': !redTeams.length}"
                     class="my-1 block w-full p-1.5 text-center text-white border-b bg-inherit
-                        outline-none focus:ring-red-500 sm:text-sm cursor-pointer">
-                    <option value="">팀 선택</option>
-                    <option *ngFor="let team of redTeams" [value]="team">{{ team }}</option>
+                        outline-none sm:text-sm cursor-pointer">
+                    <option [ngValue]="null">팀 선택</option>
+                    <option *ngFor="let team of redTeams" [ngValue]="team">{{ team.keyName }}</option>
                 </select>
             </div>
         </div>

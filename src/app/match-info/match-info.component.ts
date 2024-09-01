@@ -3,6 +3,9 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ResultService } from '../result.service';
+import { DataService } from '../data.service';
+import { Team } from '../team.model';
+import { League } from '../league.model';
 
 @Component({
   selector: 'app-match-info',
@@ -12,49 +15,55 @@ import { ResultService } from '../result.service';
   styleUrl: './match-info.component.css'
 })
 export class MatchInfoComponent {
-  leagues = [
-    { name: 'LCK', teams: ['T1', 'GEN', 'DK', 'KT', 'HLE', 'DRX', 'FOX', 'BRO', 'NS', 'KDF']},
-  ];
+  leagues = this.dataService.getLeagues();
 
-  selectedBlueTeamLeague: string = '';
-  blueTeams: string[] = [];
-  selectedBlueTeam: string = '';
+  selectedBlueTeamLeague: League | null = null;
+  blueTeams: Team[] = [];
+  selectedBlueTeam: Team | null = null;
 
-  selectedRedTeamLeague: string = '';
-  redTeams: string[] = [];
-  selectedRedTeam: string = '';
+  selectedRedTeamLeague: League | null = null;
+  redTeams: Team[] = [];
+  selectedRedTeam: Team | null = null;
 
   @ViewChild('matchNameInput') matchNameInputRef!: ElementRef<HTMLInputElement>;
+  nameMaxLength:  number = 20;
 
   isMatchNameFocused = false;
   matchName: string = '';
 
-  maxLength:  number = 20;
-
   constructor(
     private resultService: ResultService,
+    private dataService: DataService,
   ) {}
 
-  onLeagueChange1() {
+  onBlueSideLeagueChange() {
     if (this.selectedBlueTeamLeague) {
-      const selectedLeague = this.leagues.find(c => c.name === this.selectedBlueTeamLeague);
+      const selectedLeague = this.leagues.find(league => league.id === this.selectedBlueTeamLeague?.id);
       this.blueTeams = selectedLeague ? selectedLeague.teams : [];
     } else {
       this.blueTeams = [];
     }
 
-    this.selectedBlueTeam = '';
+    this.selectedBlueTeam = null;
   }
 
-  onLeagueChange2() {
+  onRedSideLeagueChange() {
     if (this.selectedRedTeamLeague) {
-      const selectedLeague = this.leagues.find(c => c.name === this.selectedRedTeamLeague);
+      const selectedLeague = this.leagues.find(league => league.id === this.selectedRedTeamLeague?.id);
       this.redTeams = selectedLeague ? selectedLeague.teams : [];
     } else {
       this.redTeams = [];
     }
 
-    this.selectedRedTeam = '';
+    this.selectedRedTeam = null;
+  }
+
+  updateBlueSideTeam() {
+    this.resultService.setBlueTeam(this.selectedBlueTeam);
+  }
+
+  updateRedSideTeam() {
+    this.resultService.setRedTeam(this.selectedRedTeam);
   }
 
   onMathchNameFocus() {

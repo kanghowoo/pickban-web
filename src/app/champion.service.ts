@@ -12,6 +12,8 @@ export class ChampionService {
   private selectedPlayerSubject = new BehaviorSubject<Player | null>(null);
   private selectedChampionSubject = new BehaviorSubject<Champion | null>(null);
 
+  private selectedChampions: Champion[] = [];
+
   constructor() { }
 
   selectedBanSubject$ = this.selectedBanSubject.asObservable();
@@ -49,6 +51,8 @@ export class ChampionService {
 
       ban.champion = selectedChampion;
       selectedChampion.assignedTo = ban;
+
+      this.addSelectedChampion(selectedChampion);
 
       this.selectedBanSubject.next(null);
       this.selectedChampionSubject.next(null);
@@ -90,6 +94,8 @@ export class ChampionService {
       this.selectedBanSubject.next(null);
     }
 
+    this.addSelectedChampion(champion);
+
   }
 
   onPlayerSelect(player: Player) {
@@ -105,6 +111,8 @@ export class ChampionService {
       player.image = "/assets/img/champion/centered/" + selectedChampion.id + ".jpg";
       selectedChampion.assignedTo = player;
 
+      this.addSelectedChampion(selectedChampion);
+
       this.selectedChampionSubject.next(null);
       this.selectedPlayerSubject.next(null);
     }  
@@ -112,5 +120,21 @@ export class ChampionService {
 
   isChampionAvailable(champion: Champion): boolean {
     return !champion.assignedTo;
+  }
+
+  resetChampionSelections() {
+    this.selectedChampions.forEach(champion => {
+      champion.assignedTo = undefined;
+    });
+
+    this.selectedBanSubject.next(null);
+    this.selectedPlayerSubject.next(null);
+    this.selectedChampionSubject.next(null);
+
+    this.selectedChampions = [];
+  }
+
+  private addSelectedChampion(champion: Champion) {
+    this.selectedChampions.push(champion);
   }
 }

@@ -2,59 +2,100 @@ import { Injectable } from '@angular/core';
 import { Champion } from './champion.model';
 import { Player } from './player.model';
 import { Ban } from './ban.model';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { League } from './league.model';
+import { Team } from './team.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  bluePlayers: Player[] = this.initializeBluePlayers();
 
-  blueTeam: Player[] = [
-    new Player(7),
-    new Player(10),
-    new Player(11),
-    new Player(18),
-    new Player(19),
+  redPlayers: Player[] = this.initializeRedPlayers();
+
+  blueBans: Ban[] = this.initializeBlueBans();
+
+  redBans: Ban[] = this.initializeRedBans();
+
+  leagues: League[] = [
+    { id: 1, keyName: 'LCK', fullName: 'League of Legends Champions Korea',
+      teams: [
+        {id: 1, keyName: 'GEN', fullName: 'Gen.G Esports'},
+        {id: 2, keyName: 'T1', fullName: 'T1'},
+        {id: 3, keyName: 'HLE', fullName: 'Hanwha Life Esports'},
+        {id: 4, keyName: 'DK', fullName: 'Dplus KIA'},
+        {id: 5, keyName: 'KT', fullName: 'kt Rolster'},
+        {id: 6, keyName: 'KDF', fullName: 'KWANGDONG FREECS'},
+        {id: 7, keyName: 'BNK', fullName: 'BNK FearX'},
+        {id: 8, keyName: 'NS', fullName: 'Nongshim RedForce'},
+        {id: 9, keyName: 'DRX', fullName: 'DRX'},
+        {id: 10, keyName: 'BRO', fullName: 'OKSavingsBank BRION'},
+      ]
+    }
   ];
 
-  redTeam: Player[] = [
-    new Player(8),
-    new Player(9),
-    new Player(12),
-    new Player(17),
-    new Player(20),
-  ];
-
-  blueBan: Ban[] = [
-    new Ban(1),
-    new Ban(3),
-    new Ban(5),
-    new Ban(14),
-    new Ban(16),
-  ];
-
-  redBan: Ban[] = [
-    new Ban(2),
-    new Ban(4),
-    new Ban(6),
-    new Ban(13),
-    new Ban(15),
-  ];
-
-  getBlueTeamPlayers() {
-    return this.blueTeam;
+  private initializeBluePlayers(): Player[] {
+    return [
+      new Player(7),
+      new Player(10),
+      new Player(11),
+      new Player(18),
+      new Player(19),
+    ];
   }
 
-  getRedTeamPlayers() {
-    return this.redTeam;
+  private initializeRedPlayers(): Player[] {
+    return[
+      new Player(8),
+      new Player(9),
+      new Player(12),
+      new Player(17),
+      new Player(20),
+    ];
   }
 
-  getBlueTeamBans() {
-    return this.blueBan;
+  private initializeBlueBans(): Ban[] {
+    return [
+      new Ban(1),
+      new Ban(3),
+      new Ban(5),
+      new Ban(14),
+      new Ban(16),
+    ];
   }
 
-  getRedTeamBans() {
-    return this.redBan;
+  private initializeRedBans(): Ban[] {
+    return [
+      new Ban(2),
+      new Ban(4),
+      new Ban(6),
+      new Ban(13),
+      new Ban(15),
+    ];
+  }
+
+  private initializedBluePlayersSubject = new BehaviorSubject<Player[]>(this.bluePlayers);
+  initializedBluePlayersSubject$ = this.initializedBluePlayersSubject.asObservable();
+
+  private initializedRedPlayersSubject = new BehaviorSubject<Player[]>(this.redPlayers);
+  initializedRedPlayersSubject$ = this.initializedRedPlayersSubject.asObservable();
+
+  private initializedBlueBansSubject = new BehaviorSubject<Ban[]>(this.blueBans);
+  initializedBlueBansSubject$ = this.initializedBlueBansSubject.asObservable();
+
+  private initializedRedBansSubject = new BehaviorSubject<Ban[]>(this.redBans);
+  initializedRedBansSubject$ = this.initializedRedBansSubject.asObservable();
+
+  initializeAll() {
+    this.initializedBluePlayersSubject.next(this.initializeBluePlayers());
+    this.initializedRedPlayersSubject.next(this.initializeRedPlayers());
+    this.initializedBlueBansSubject.next(this.initializeBlueBans());
+    this.initializedRedBansSubject.next(this.initializeRedBans());
+  }
+
+  getLeagues() {
+    return this.leagues;
   }
 
   // https://ddragon.leagueoflegends.com/cdn/14.15.1/data/ko_KR/champion.json

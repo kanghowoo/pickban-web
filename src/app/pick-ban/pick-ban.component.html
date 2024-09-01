@@ -3,7 +3,8 @@
     <div class="flex flex-row justify-center items-stretch pt-2 pl-4 pr-4">
       <!-- blue ban champion list -->
       <div class="min-w-80 max-w-80">
-        <app-team-ban [bans]="blueBans" team="blue">
+        <app-team-ban
+          team="blue">
         </app-team-ban>
       </div>
       <!-- info -->
@@ -13,7 +14,8 @@
       </div>
       <!-- red ban champion list -->
       <div class="min-w-80 max-w-80">
-        <app-team-ban [bans]="redBans" team="red">
+        <app-team-ban
+          team="red">
         </app-team-ban>
       </div>
     </div>
@@ -22,7 +24,7 @@
       <!-- Blue Team -->
       <div class="mr-4 min-w-80 max-w-80">
         <app-team-player
-        [players]="bluePlayers" team="blue">
+          team="blue">
         </app-team-player>
       </div>
 
@@ -34,7 +36,7 @@
       <!-- Red Team -->    
       <div class="ml-4 min-w-80 max-w-80">
         <app-team-player
-        [players]="redPlayers" team="red">
+          team="red">
         </app-team-player>
       </div>
     </div>
@@ -43,6 +45,10 @@
     <div class="flex justify-center">
       <app-pick-ban-result></app-pick-ban-result>
     </div>
+    <div class="flex justify-center items-center">
+      <app-result-button></app-result-button>
+    </div>
+    
   </div>
   
 </section>

@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Player } from '../player.model';
 import { ChampionService } from '../champion.service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-team-player',
@@ -11,7 +12,7 @@ import { ChampionService } from '../champion.service';
   styleUrl: './team-player.component.css'
 })
 export class TeamPlayerComponent implements OnInit {
-  @Input() players: Player[] = [];
+  players: Player[] = [];
   @Input() team!: string;
 
   selectedPlayer: Player | null = null;
@@ -19,15 +20,31 @@ export class TeamPlayerComponent implements OnInit {
   isBlueTeam: boolean = false;
   isRedTeam : boolean = false;
 
-  constructor(private championService: ChampionService) {}
+  constructor(
+    private championService: ChampionService,
+    private dataService: DataService,
+  ) {}
 
   ngOnInit(): void {
+    this.isBlueTeam = this.team === 'blue';
+    this.isRedTeam = this.team === 'red';
+
     this.championService.selectedPlayer$.subscribe(player => {
       this.selectedPlayer = player;
     });
 
-    this.isBlueTeam = this.team === 'blue';
-    this.isRedTeam = this.team === 'red';
+    if (this.isBlueTeam) {
+      this.dataService.initializedBluePlayersSubject$.subscribe(players => {
+        this.players = players;
+      });
+    };
+
+    if (this.isRedTeam) {
+      this.dataService.initializedRedPlayersSubject$.subscribe(players => {
+        this.players = players;
+      })
+    }
+
   }
 
   selectPlayer(player: Player) {
