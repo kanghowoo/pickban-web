@@ -4,5 +4,6 @@ export interface League {
     id: number;
     keyName: string;
     fullName: string;
+    logo: string;
     teams: Team[];
 }

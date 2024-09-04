@@ -19,18 +19,18 @@ export class DataService {
   redBans: Ban[] = this.initializeRedBans();
 
   leagues: League[] = [
-    { id: 1, keyName: 'LCK', fullName: 'League of Legends Champions Korea',
+    { id: 1, keyName: 'LCK', fullName: 'League of Legends Champions Korea', logo: '',
       teams: [
-        {id: 1, keyName: 'GEN', fullName: 'Gen.G Esports'},
-        {id: 2, keyName: 'T1', fullName: 'T1'},
-        {id: 3, keyName: 'HLE', fullName: 'Hanwha Life Esports'},
-        {id: 4, keyName: 'DK', fullName: 'Dplus KIA'},
-        {id: 5, keyName: 'KT', fullName: 'kt Rolster'},
-        {id: 6, keyName: 'KDF', fullName: 'KWANGDONG FREECS'},
-        {id: 7, keyName: 'BNK', fullName: 'BNK FearX'},
-        {id: 8, keyName: 'NS', fullName: 'Nongshim RedForce'},
-        {id: 9, keyName: 'DRX', fullName: 'DRX'},
-        {id: 10, keyName: 'BRO', fullName: 'OKSavingsBank BRION'},
+        {id: 1, keyName: 'GEN', fullName: 'Gen.G Esports', logo: 'assets/img/logo/team/GEN.png'},
+        {id: 2, keyName: 'T1', fullName: 'T1', logo: 'assets/img/logo/team/T1.png'},
+        {id: 3, keyName: 'HLE', fullName: 'Hanwha Life Esports', logo: 'assets/img/logo/team/HLE.png'},
+        {id: 4, keyName: 'DK', fullName: 'Dplus KIA', logo: 'assets/img/logo/team/DK.png'},
+        {id: 5, keyName: 'KT', fullName: 'kt Rolster', logo: 'assets/img/logo/team/KT.png'},
+        {id: 6, keyName: 'KDF', fullName: 'KWANGDONG FREECS', logo: 'assets/img/logo/team/KDF.png'},
+        {id: 7, keyName: 'BNK', fullName: 'BNK FearX', logo: 'assets/img/logo/team/BNK.png'},
+        {id: 8, keyName: 'NS', fullName: 'Nongshim RedForce', logo: 'assets/img/logo/team/NS.png'},
+        {id: 9, keyName: 'DRX', fullName: 'DRX', logo: 'assets/img/logo/team/DRX.png'},
+        {id: 10, keyName: 'BRO', fullName: 'OKSavingsBank BRION', logo: 'assets/img/logo/team/BRO.png'},
       ]
     }
   ];

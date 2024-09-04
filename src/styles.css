@@ -3,6 +3,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .prediction-card {
+    @apply w-112 h-16 flex items-center px-1 bg-card
+            rounded-2xl transition-colors duration-100
+            text-white text-lg font-bold cursor-pointer;
+    }
+
+    .prediction-card:hover {
+        @apply bg-white bg-opacity-6;
+    }
+
+    .prediction-card:active {
+        @apply bg-white bg-opacity-5;
+    }
+
+    .prediction-card:focus {
+        @apply outline-none;
+    }
+
+    .text-gradient-blue-to-red {
+        @apply text-transparent bg-clip-text
+            bg-gradient-to-r from-blueTeam to-redTeam
+    }
+
+}
+
+
 .diagonal-line {
     position: relative;
 }
@@ -35,5 +62,14 @@
     border-color: rgba(185, 28, 28, 0.6);
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+    height: 100%;
+    overflow: auto;
+    scrollbar-width: auto;
+    background-color: #141517;
+}
+body {
+    overflow: auto;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
