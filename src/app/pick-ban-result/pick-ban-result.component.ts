@@ -5,6 +5,8 @@ import { ResultService } from '../result.service';
 import { Team } from '../team.model';
 import { Player } from '../player.model';
 import { Ban } from '../ban.model';
+import { ActivatedRoute } from '@angular/router';
+import { MatchService } from '../match.service';
 
 @Component({
   selector: 'app-pick-ban-result',
@@ -22,6 +24,8 @@ export class PickBanOrderComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private resultService: ResultService,
+    private route: ActivatedRoute,
+    private matchService: MatchService,
   ) {}
 
   bluePlayers: Player[] = [];
@@ -33,31 +37,38 @@ export class PickBanOrderComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.initializedBluePlayersSubject$.subscribe(players=> {
       this.bluePlayers = players;
-    })
+    });
 
     this.dataService.initializedRedPlayersSubject$.subscribe(players => {
       this.redPlayers = players;
-    })
+    });
 
     this.dataService.initializedBlueBansSubject$.subscribe(bans => {
       this.blueBans = bans;
-    })
+    });
     
     this.dataService.initializedRedBansSubject$.subscribe(bans => {
       this.redBans = bans;
-    })
-
-    this.resultService.matchNameSubject$.subscribe(name => {
-      this.matchName = name;
     });
 
-    this.resultService.blueTeamNameSubject$.subscribe(team => {
-      this.blueTeam = team;
-    })
+    const matchId = this.route.snapshot.paramMap.get('matchId');
+    if (matchId) {
+      this.blueTeam = this.matchService.getMatch(matchId).home;
+      this.redTeam = this.matchService.getMatch(matchId).away;
+      this.matchName = this.matchService.getMatch(matchId).name;
 
-    this.resultService.redTeamNameSubject$.subscribe(team => {
-      this.redTeam = team;
-    })
+    } else {
+      this.resultService.matchNameSubject$.subscribe(name => {
+        this.matchName = name;
+      });
+      this.resultService.blueTeamNameSubject$.subscribe(team => {
+        this.blueTeam = team;
+      });
+      this.resultService.redTeamNameSubject$.subscribe(team => {
+        this.redTeam = team;
+      });      
+    }
+
   }
 
 }

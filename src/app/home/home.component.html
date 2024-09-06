@@ -4,11 +4,11 @@
             <div class="mr-auto p-0.5">
                 <span class=" text-white text-lg m-0.5">밴픽 짜기</span>
                 <div class="py-1">
-                    <button routerLink="/pick-ban"
+                    <div routerLink="/simulation/custom"
                         class="prediction-card justify-center">
                         <span>S T A R T</span>
                         <mat-icon>arrow_forward</mat-icon>
-                    </button>
+                    </div>
                 </div>
             </div>        
         </div>
@@ -20,7 +20,8 @@
                     <span>{{match.schedule}}</span><span><em>{{match.name}}</em></span>
                     
                 </div>
-                <div class="prediction-card relative">
+                <div routerLink="/simulation/match/{{match.id}}"
+                    class="prediction-card relative">
                     <div class="mr-auto flex items-center justify-center">
                         <img class="w-13 h-13 object-contain m-2" src='{{match.home.logo}}'/>
                         <span>{{match.home.keyName}}</span>
