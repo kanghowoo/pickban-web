@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DataService } from '../data.service';
 import { ChampionService } from '../champion.service';
+import { InitializeService } from '../initialize.service';
 
 @Component({
   selector: 'app-result-button',
@@ -14,13 +15,11 @@ import { ChampionService } from '../champion.service';
 export class ResultButtonComponent {
 
   constructor(
-    private dataService: DataService,
-    private championService: ChampionService,
+    private initializeService: InitializeService,
   ){}
 
-  initializePlayers() {
-    this.dataService.initializeAll();
-    this.championService.resetChampionSelections();
+  initializePickBan() {
+    this.initializeService.initializePickBan();
   }
 
 }

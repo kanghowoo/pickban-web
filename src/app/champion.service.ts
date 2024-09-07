@@ -122,7 +122,7 @@ export class ChampionService {
     return !champion.assignedTo;
   }
 
-  resetChampionSelections() {
+  initializeSelectedChampions() {
     this.selectedChampions.forEach(champion => {
       champion.assignedTo = undefined;
     });

@@ -28,4 +28,10 @@ export class ResultService {
     this.redTeamSubject.next(team);
   }
 
+  initializeResult() {
+    this.matchNameSubject.next('');
+    this.blueTeamSubject.next(null);
+    this.redTeamSubject.next(null);
+  }
+
 }

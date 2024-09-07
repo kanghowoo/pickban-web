@@ -19,18 +19,18 @@ export class DataService {
   redBans: Ban[] = this.initializeRedBans();
 
   leagues: League[] = [
-    { id: 1, keyName: 'LCK', fullName: 'League of Legends Champions Korea', logo: '',
+    { id: 1, keyName: 'LCK', fullName: 'League of Legends Champions Korea', logo: 'assets/img/logo/league/LCK.png',
       teams: [
-        {id: 1, keyName: 'GEN', fullName: 'Gen.G Esports', logo: 'assets/img/logo/team/GEN.png'},
-        {id: 2, keyName: 'T1', fullName: 'T1', logo: 'assets/img/logo/team/T1.png'},
-        {id: 3, keyName: 'HLE', fullName: 'Hanwha Life Esports', logo: 'assets/img/logo/team/HLE.png'},
-        {id: 4, keyName: 'DK', fullName: 'Dplus KIA', logo: 'assets/img/logo/team/DK.png'},
-        {id: 5, keyName: 'KT', fullName: 'kt Rolster', logo: 'assets/img/logo/team/KT.png'},
-        {id: 6, keyName: 'KDF', fullName: 'KWANGDONG FREECS', logo: 'assets/img/logo/team/KDF.png'},
-        {id: 7, keyName: 'BNK', fullName: 'BNK FearX', logo: 'assets/img/logo/team/BNK.png'},
-        {id: 8, keyName: 'NS', fullName: 'Nongshim RedForce', logo: 'assets/img/logo/team/NS.png'},
-        {id: 9, keyName: 'DRX', fullName: 'DRX', logo: 'assets/img/logo/team/DRX.png'},
-        {id: 10, keyName: 'BRO', fullName: 'OKSavingsBank BRION', logo: 'assets/img/logo/team/BRO.png'},
+        {id: 1, keyName: 'GEN', fullName: 'Gen.G Esports', logo: 'assets/img/logo/team/GEN.png', leagueId: 1},
+        {id: 2, keyName: 'T1', fullName: 'T1', logo: 'assets/img/logo/team/T1.png', leagueId: 1},
+        {id: 3, keyName: 'HLE', fullName: 'Hanwha Life Esports', logo: 'assets/img/logo/team/HLE.png', leagueId: 1},
+        {id: 4, keyName: 'DK', fullName: 'Dplus KIA', logo: 'assets/img/logo/team/DK.png', leagueId: 1},
+        {id: 5, keyName: 'KT', fullName: 'kt Rolster', logo: 'assets/img/logo/team/KT.png', leagueId: 1},
+        {id: 6, keyName: 'KDF', fullName: 'KWANGDONG FREECS', logo: 'assets/img/logo/team/KDF.png', leagueId: 1},
+        {id: 7, keyName: 'BNK', fullName: 'BNK FearX', logo: 'assets/img/logo/team/BNK.png', leagueId: 1},
+        {id: 8, keyName: 'NS', fullName: 'Nongshim RedForce', logo: 'assets/img/logo/team/NS.png', leagueId: 1},
+        {id: 9, keyName: 'DRX', fullName: 'DRX', logo: 'assets/img/logo/team/DRX.png', leagueId: 1},
+        {id: 10, keyName: 'BRO', fullName: 'OKSavingsBank BRION', logo: 'assets/img/logo/team/BRO.png', leagueId: 1},
       ]
     }
   ];
@@ -87,7 +87,7 @@ export class DataService {
   private initializedRedBansSubject = new BehaviorSubject<Ban[]>(this.redBans);
   initializedRedBansSubject$ = this.initializedRedBansSubject.asObservable();
 
-  initializeAll() {
+  initializePlayersAndBans() {
     this.initializedBluePlayersSubject.next(this.initializeBluePlayers());
     this.initializedRedPlayersSubject.next(this.initializeRedPlayers());
     this.initializedBlueBansSubject.next(this.initializeBlueBans());
