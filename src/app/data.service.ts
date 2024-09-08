@@ -19,18 +19,18 @@ export class DataService {
   redBans: Ban[] = this.initializeRedBans();
 
   leagues: League[] = [
-    { id: 1, keyName: 'LCK', fullName: 'League of Legends Champions Korea', logo: 'assets/img/logo/league/LCK.png',
+    { id: 1, slug: 'LCK', fullName: 'League of Legends Champions Korea',
       teams: [
-        {id: 1, keyName: 'GEN', fullName: 'Gen.G Esports', logo: 'assets/img/logo/team/GEN.png', leagueId: 1},
-        {id: 2, keyName: 'T1', fullName: 'T1', logo: 'assets/img/logo/team/T1.png', leagueId: 1},
-        {id: 3, keyName: 'HLE', fullName: 'Hanwha Life Esports', logo: 'assets/img/logo/team/HLE.png', leagueId: 1},
-        {id: 4, keyName: 'DK', fullName: 'Dplus KIA', logo: 'assets/img/logo/team/DK.png', leagueId: 1},
-        {id: 5, keyName: 'KT', fullName: 'kt Rolster', logo: 'assets/img/logo/team/KT.png', leagueId: 1},
-        {id: 6, keyName: 'KDF', fullName: 'KWANGDONG FREECS', logo: 'assets/img/logo/team/KDF.png', leagueId: 1},
-        {id: 7, keyName: 'BNK', fullName: 'BNK FearX', logo: 'assets/img/logo/team/BNK.png', leagueId: 1},
-        {id: 8, keyName: 'NS', fullName: 'Nongshim RedForce', logo: 'assets/img/logo/team/NS.png', leagueId: 1},
-        {id: 9, keyName: 'DRX', fullName: 'DRX', logo: 'assets/img/logo/team/DRX.png', leagueId: 1},
-        {id: 10, keyName: 'BRO', fullName: 'OKSavingsBank BRION', logo: 'assets/img/logo/team/BRO.png', leagueId: 1},
+        {id: 1, slug: 'GEN', fullName: 'Gen.G Esports', leagueId: 1},
+        {id: 2, slug: 'T1', fullName: 'T1', leagueId: 1},
+        {id: 3, slug: 'HLE', fullName: 'Hanwha Life Esports', leagueId: 1},
+        {id: 4, slug: 'DK', fullName: 'Dplus KIA', leagueId: 1},
+        {id: 5, slug: 'KT', fullName: 'kt Rolster', leagueId: 1},
+        {id: 6, slug: 'KDF', fullName: 'KWANGDONG FREECS', leagueId: 1},
+        {id: 7, slug: 'BNK', fullName: 'BNK FearX', leagueId: 1},
+        {id: 8, slug: 'NS', fullName: 'Nongshim RedForce', leagueId: 1},
+        {id: 9, slug: 'DRX', fullName: 'DRX', leagueId: 1},
+        {id: 10, slug: 'BRO', fullName: 'OKSavingsBank BRION', leagueId: 1},
       ]
     }
   ];

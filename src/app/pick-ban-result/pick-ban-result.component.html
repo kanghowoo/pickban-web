@@ -11,7 +11,7 @@
         <div class="flex-grow basis-0 border-b border-l border-violet-200/20 flex">
             <div class="w-1/12 flex justify-center items-center
                 text-white text-sm text-center bg-orderHeader">
-                <img *ngIf="blueTeam" [src]="blueTeam.logo" alt={{blueTeam.keyName}}
+                <img *ngIf="blueTeam" [src]="blueTeam.slug | logoPath:'team'" alt={{blueTeam.slug}}
                     class="w-13 h-13" />
             </div> <!--team name-->
             <div class="w-11/12 flex">
@@ -71,7 +71,7 @@
         <div class="flex-grow basis-0 border-l border-violet-200/20 flex">
             <div class="w-1/12 flex justify-center items-center
                 text-white text-sm text-center bg-orderHeader">
-                <img *ngIf="redTeam" [src]="redTeam.logo" alt={{redTeam.keyName}}
+                <img *ngIf="redTeam" [src]="redTeam.slug | logoPath:'team'" alt={{redTeam.slug}}
                     class="w-13 h-13" />
             </div>
             <!--red ban 3-->

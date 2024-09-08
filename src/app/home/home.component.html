@@ -23,14 +23,14 @@
                 <div routerLink="/simulation/match/{{match.id}}"
                     class="prediction-card relative">
                     <div class="mr-auto flex items-center justify-center">
-                        <img class="w-13 h-13 object-contain m-2" src='{{match.home.logo}}'/>
-                        <span>{{match.home.keyName}}</span>
+                        <img class="w-13 h-13 object-contain m-2" [src]="match.home.slug | logoPath:'team'"/>
+                        <span>{{match.home.slug}}</span>
                     </div>
                     <div class="absolute left-1/2 transform -translate-x-1/2 text-lg
                         text-gradient-blue-to-red">VS</div>
                     <div class="flex flex-row-reverse items-center">
-                        <img class="w-13 h-13 object-contain m-2" src="assets/img/logo/team/T1.png" />
-                        <span>{{match.away.keyName}}</span>
+                        <img class="w-13 h-13 object-contain m-2" [src]="match.away.slug | logoPath: 'team'"/>
+                        <span>{{match.away.slug}}</span>
                     </div>
                 </div>    
             </div>

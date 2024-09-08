@@ -1,6 +1,6 @@
 export interface Team {
     id: number;
-    keyName: string;
+    slug: string;
     fullName: string;
-    logo: string;
+    leagueId: number;
 }

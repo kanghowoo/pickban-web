@@ -5,11 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { Match } from '../match.model';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatchService } from '../match.service';
+import { LogoPathPipe } from "../logo-path.pipe";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, RouterModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, RouterModule, LogoPathPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

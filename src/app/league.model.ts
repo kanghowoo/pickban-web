@@ -2,8 +2,7 @@ import { Team } from "./team.model";
 
 export interface League {
     id: number;
-    keyName: string;
+    slug: string;
     fullName: string;
-    logo: string;
     teams: Team[];
 }
