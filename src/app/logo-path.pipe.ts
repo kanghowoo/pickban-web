@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class LogoPathPipe implements PipeTransform {
 
   transform(slug: string, type: 'league' | 'team'): string {
-    const LOGO_PATH: string = 'assets/img/logo/';
+    const LOGO_PATH: string = 'assets/img/logo';
 
     switch (type) {
       case 'league':
