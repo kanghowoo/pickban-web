@@ -1,69 +1,43 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ResultService } from '../result.service';
 import { DataService } from '../data.service';
-import { Team } from '../team.model';
-import { League } from '../league.model';
-
+import { MatchService } from '../match.service';
+import { ActivatedRoute } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MatchTeamInfoComponent } from "../match-team-info/match-team-info.component";
 @Component({
   selector: 'app-match-info',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatIconModule,
+    NgSelectModule, MatchTeamInfoComponent],
   templateUrl: './match-info.component.html',
   styleUrl: './match-info.component.css'
 })
-export class MatchInfoComponent {
-  leagues = this.dataService.getLeagues();
-
-  selectedBlueTeamLeague: League | null = null;
-  blueTeams: Team[] = [];
-  selectedBlueTeam: Team | null = null;
-
-  selectedRedTeamLeague: League | null = null;
-  redTeams: Team[] = [];
-  selectedRedTeam: Team | null = null;
-
+export class MatchInfoComponent implements OnInit {
   @ViewChild('matchNameInput') matchNameInputRef!: ElementRef<HTMLInputElement>;
   nameMaxLength:  number = 20;
 
   isMatchNameFocused = false;
   matchName: string = '';
 
+  isMatch:boolean = false;
   constructor(
     private resultService: ResultService,
-    private dataService: DataService,
+    private route: ActivatedRoute,
+    private matchService: MatchService,
   ) {}
 
-  onBlueSideLeagueChange() {
-    if (this.selectedBlueTeamLeague) {
-      const selectedLeague = this.leagues.find(league => league.id === this.selectedBlueTeamLeague?.id);
-      this.blueTeams = selectedLeague ? selectedLeague.teams : [];
-    } else {
-      this.blueTeams = [];
+  ngOnInit(): void {
+    const matchId = this.route.snapshot.paramMap.get('matchId');
+    if (matchId) {
+      this.isMatch = true;
+
+      const selectedMatch = this.matchService.getMatch(matchId);
+      this.matchName = selectedMatch.name;
     }
-
-    this.selectedBlueTeam = null;
-  }
-
-  onRedSideLeagueChange() {
-    if (this.selectedRedTeamLeague) {
-      const selectedLeague = this.leagues.find(league => league.id === this.selectedRedTeamLeague?.id);
-      this.redTeams = selectedLeague ? selectedLeague.teams : [];
-    } else {
-      this.redTeams = [];
-    }
-
-    this.selectedRedTeam = null;
-  }
-
-  updateBlueSideTeam() {
-    this.resultService.setBlueTeam(this.selectedBlueTeam);
-  }
-
-  updateRedSideTeam() {
-    this.resultService.setRedTeam(this.selectedRedTeam);
   }
 
   onMathchNameFocus() {
@@ -88,4 +62,5 @@ export class MatchInfoComponent {
     this.matchName = '';
     this.matchNameInputRef?.nativeElement.focus();   
   }
+
 }

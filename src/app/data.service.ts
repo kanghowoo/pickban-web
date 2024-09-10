@@ -3,8 +3,8 @@ import { Champion } from './champion.model';
 import { Player } from './player.model';
 import { Ban } from './ban.model';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { League } from './league.model';
-import { Team } from './team.model';
+import { environment } from '../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +17,6 @@ export class DataService {
   blueBans: Ban[] = this.initializeBlueBans();
 
   redBans: Ban[] = this.initializeRedBans();
-
-  leagues: League[] = [
-    { id: 1, slug: 'LCK', fullName: 'League of Legends Champions Korea',
-      teams: [
-        {id: 1, slug: 'GEN', fullName: 'Gen.G Esports', leagueId: 1},
-        {id: 2, slug: 'T1', fullName: 'T1', leagueId: 1},
-        {id: 3, slug: 'HLE', fullName: 'Hanwha Life Esports', leagueId: 1},
-        {id: 4, slug: 'DK', fullName: 'Dplus KIA', leagueId: 1},
-        {id: 5, slug: 'KT', fullName: 'kt Rolster', leagueId: 1},
-        {id: 6, slug: 'KDF', fullName: 'KWANGDONG FREECS', leagueId: 1},
-        {id: 7, slug: 'BNK', fullName: 'BNK FearX', leagueId: 1},
-        {id: 8, slug: 'NS', fullName: 'Nongshim RedForce', leagueId: 1},
-        {id: 9, slug: 'DRX', fullName: 'DRX', leagueId: 1},
-        {id: 10, slug: 'BRO', fullName: 'OKSavingsBank BRION', leagueId: 1},
-      ]
-    }
-  ];
 
   private initializeBluePlayers(): Player[] {
     return [
@@ -87,15 +70,13 @@ export class DataService {
   private initializedRedBansSubject = new BehaviorSubject<Ban[]>(this.redBans);
   initializedRedBansSubject$ = this.initializedRedBansSubject.asObservable();
 
+  constructor() {}
+
   initializePlayersAndBans() {
     this.initializedBluePlayersSubject.next(this.initializeBluePlayers());
     this.initializedRedPlayersSubject.next(this.initializeRedPlayers());
     this.initializedBlueBansSubject.next(this.initializeBlueBans());
     this.initializedRedBansSubject.next(this.initializeRedBans());
-  }
-
-  getLeagues() {
-    return this.leagues;
   }
 
   // https://ddragon.leagueoflegends.com/cdn/14.15.1/data/ko_KR/champion.json

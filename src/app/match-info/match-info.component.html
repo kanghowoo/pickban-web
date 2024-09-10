@@ -1,85 +1,53 @@
-<!--match name-->
-<div class="flex justify-between">
-    <div class="pl-2 text-white text-sm">BLUE TEAM</div>
-    <div class="relative flex items-center pl-2">
-        <input #matchNameInput
-            type="text" placeholder="매치 이름 입력하기 (20자)"
-            [(ngModel)]="matchName"
-            (focus)="onMathchNameFocus()"
-            (blur)="onMatchNameBlur()"
-            (keyup.enter)="updateMatchName()"
-            class="w-52 pt-2 justify-center bg-inherit border-b outline-none
-                text-white text-center text-sm placeholder:text-gray-400/75
-                whitespace-nowrap overflow-visible text-ellipsis"
-            [maxLength]="nameMaxLength"
-        />
+<div class="flex flex-col h-full min-w-champioin-list max-w-champion-list mx-4 
+bg-gradient-to-r from-blueTeam via-home to-redTeam">
+    <!--match name-->
+    <div class="flex justify-between">
+        <div class="pl-2 text-white text-sm">BLUE TEAM</div>
+        <div *ngIf="isMatch; else customMatchName"
+            class="relative flex items-center pl-2">
+            <div
+                type="text"
+                class="w-64 pt-2 justify-center bg-inherit outline-none
+                text-white text-center text-sm font-medium truncate"
+            >{{matchName}}
+            </div>
+        </div>
+        <ng-template #customMatchName>
+        <div class="relative flex items-center pl-2">
+            <input #matchNameInput
+                type="text" placeholder="매치 이름 입력하기 (20자)"
+                [(ngModel)]="matchName"
+                (focus)="onMathchNameFocus()"
+                (blur)="onMatchNameBlur()"
+                (keyup.enter)="updateMatchName()"
+                class="w-64 pt-2 justify-center bg-inherit border-b outline-none
+                    text-white text-center text-sm font-medium placeholder:text-gray-400/75
+                    truncate"
+                [maxLength]="nameMaxLength"
+            />
 
-        <mat-icon
-            (mousedown)="preventBlur($event)"
-            (click)="clearMatchName()"
-            [ngClass]="{
-                'invisible': !isMatchNameFocused
-            }"
-            class="flex pt-1 pl-1 text-sm text-center text-gray-400/75
-                cursor-pointer"            
-        >cancel
-        </mat-icon>
-    </div>
-    <div class="flex-row-reverse pr-2 text-white text-sm">RED TEAM</div>
-</div>
-<!--team info-->
-<div class="h-full flex">
-    <!--blue team select-->
-    <div class="w-1/2 flex flex-col justify-center pl-2">
-        <div class="flex items-center space-x-2">
-            <div class="w-24">
-                <select [(ngModel)]="selectedBlueTeamLeague" 
-                        (ngModelChange)="onBlueSideLeagueChange()" 
-                        class="my-1 block w-full p-1.5 text-center text-white border-b bg-inherit
-                            outline-none sm:text-sm cursor-pointer">
-                    <option [ngValue]="null">리그 선택</option>
-                    <option *ngFor="let league of leagues" [ngValue]="league">{{ league.keyName }}</option>
-                </select>
-            </div>
-            <div class="w-24"
-                [hidden]="!blueTeams.length">
-                <select
-                    [(ngModel)]="selectedBlueTeam"
-                    (ngModelChange)="updateBlueSideTeam()"
-                    [ngClass]="{'cursor-not-allowed': !blueTeams.length}"
-                    class="my-1 block w-full p-1.5 text-center text-white border-b bg-inherit
-                        outline-none sm:text-sm cursor-pointer">
-                    <option [ngValue]="null">팀 선택</option>    
-                    <option *ngFor="let team of blueTeams" [ngValue]="team">{{ team.keyName }}</option>
-                </select>
-            </div>
+            <mat-icon
+                (mousedown)="preventBlur($event)"
+                (click)="clearMatchName()"
+                [ngClass]="{
+                    'invisible': !isMatchNameFocused
+                }"
+                class="flex pt-1 pl-1 text-sm font-medium text-center text-gray-400/75
+                    cursor-pointer"            
+            >cancel
+            </mat-icon>
         </div>
+        </ng-template>
+        <div class="flex-row-reverse pr-2 text-white text-sm">RED TEAM</div>
     </div>
-    <!-- red team select-->
-    <div class="w-1/2 flex flex-col justify-center pr-2">
-        <div class="flex flex-row-reverse space-x-2 space-x-reverse">
-            <div class="w-24">
-                <select [(ngModel)]="selectedRedTeamLeague" 
-                        (ngModelChange)="onRedSideLeagueChange()" 
-                        class="my-1 block w-full p-1.5 text-center text-white border-b bg-inherit
-                            outline-none sm:text-sm cursor-pointer">
-                    <option [ngValue]="null">리그 선택</option>     
-                    <option *ngFor="let league of leagues" [ngValue]="league">{{ league.keyName }}</option>
-                </select>
-            </div>
-            <div class="w-24"
-                [hidden]="!redTeams.length">
-                <select
-                    [(ngModel)]="selectedRedTeam"
-                    (ngModelChange)="updateRedSideTeam()"
-                    [ngClass]="{'cursor-not-allowed': !redTeams.length}"
-                    class="my-1 block w-full p-1.5 text-center text-white border-b bg-inherit
-                        outline-none sm:text-sm cursor-pointer">
-                    <option [ngValue]="null">팀 선택</option>
-                    <option *ngFor="let team of redTeams" [ngValue]="team">{{ team.keyName }}</option>
-                </select>
-            </div>
-        </div>
+    <!--team info-->
+    <div class="w-full h-full flex justify-between">
+        <app-match-team-info
+            team="blue">
+        </app-match-team-info>
+        <app-match-team-info
+            team="red">
+        </app-match-team-info>
     </div>
 </div>
   

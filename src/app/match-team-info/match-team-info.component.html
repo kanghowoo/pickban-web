@@ -1,0 +1,110 @@
+<div class="flex flex-col h-full justify-end px-2">
+    <div class="flex items-center space-x-2"
+        [ngClass]="{
+            'space-x-reverse': isRedTeam,
+            'flex-row-reverse': isRedTeam,
+        }">
+        <div *ngIf="isMatch; else customTeamLeague" class="w-24">
+            <div *ngIf="leagues; else loading"
+                class="my-1 w-full text-center text-white bg-inherit
+                    outline-none text-sm font-medium flex items-center justify-center">
+                <img *ngIf="this.selectedTeam"
+                    [src]="leagues[this.selectedTeam.leagueId].slug | logoPath:'league'"
+                    class="w-8 h-8 pl-0.5"/>
+                {{ this.selectedLeague!.slug}}
+            </div>
+        </div>
+        <ng-template #customTeamLeague>
+        <div class="relative w-24">
+            <button id="league-select"
+               (click)="toggleLeagueDropdown()"
+               class="inline-flex flex-shrink-0 z-10 my-1 w-full p-1.5 text-center text-white border-b bg-inherit
+                    outline-none text-sm font-medium cursor-pointer items-center" type="button">
+                <div class="mx-auto">
+                    <!-- 선택된 리그가 있을 경우 해당 팀의 이름과 로고를 표시 -->
+                    <ng-container *ngIf="selectedLeague; else selectLeagueText">
+                        <img [src]="selectedLeague.slug | logoPath:'league'" class="w-5 h-5 inline-block mr-2">
+                        {{ selectedLeague.slug }}
+                    </ng-container>
+                    <ng-template #selectLeagueText>리그 선택</ng-template>                        
+                </div>
+                <svg class="w-2 h-2 ml-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+            </button>
+
+            <div *ngIf="leagues; else loading"
+                id="dropdown-league"
+                 [hidden]="!dropdownLeagueVisible"
+                 class="absolute z-10 w-full bg-card rounded-lg">
+                <ul class="py-2 text-sm text-white" aria-labelledby="team-select">
+                    <li *ngFor="let league of leagues">
+                        <button type="button"
+                            (click)="onLeagueChange(league)"
+                            class="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-600">
+                            <div class="inline-flex items-center">
+                                <img *ngIf="league"
+                                    [src]="league.slug | logoPath:'league'" class="w-5 h-5 pl-0.5 inline-block mr-2"/>
+                                {{ league.slug }}
+                            </div>
+                        </button>
+                    </li>
+                </ul>
+            </div>            
+        </div>
+        </ng-template>
+        <div *ngIf="isMatch; else customTeam" class="w-24">
+            <div class="my-1 w-full text-center text-white bg-inherit
+                    outline-none text-sm font-medium flex items-center justify-center">
+                <img *ngIf="this.selectedTeam"
+                    [src]="this.selectedTeam.slug | logoPath:'team'"
+                    class="w-8 h-8 pl-0.5"/>
+                {{ this.selectedTeam!.slug}}    
+            </div>
+        </div>
+        <ng-template #customTeam>
+        <div class="relative w-24" [hidden]="!teams.length">
+            <button id="team-select"
+                    (click)="toggleTeamDropdown()"
+                    class="inline-flex flex-shrink-0 z-10 my-1 w-full p-1.5 text-center text-white border-b bg-inherit
+                           outline-none text-sm font-medium cursor-pointer items-center" type="button">
+                <div class="mx-auto">
+                    <!-- 선택된 팀이 있을 경우 해당 팀의 이름과 로고를 표시 -->
+                    <ng-container *ngIf="selectedTeam; else selectTeamText">
+                        <img [src]="selectedTeam.slug | logoPath:'team'" class="w-5 h-5 inline-block mr-2">
+                        {{ selectedTeam.slug }}
+                    </ng-container>
+                    <ng-template #selectTeamText>팀 선택</ng-template>                        
+                </div>
+                <svg class="w-2 h-2 ml-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+            </button>
+            
+            <div id="dropdown-team"
+                 [hidden]="!dropdownTeamVisible"
+                 class="absolute z-10 w-full bg-card rounded-lg">
+                <ul class="py-2 text-sm text-white" aria-labelledby="team-select">
+                    <li *ngFor="let team of teams">
+                        <button type="button"
+                            (click)="onChangeTeam(team)"
+                            class="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-600">
+                            <div class="inline-flex items-center">
+                                <img *ngIf="team"
+                                    [src]="team.slug | logoPath:'team'" class="w-5 h-5 pl-0.5 inline-block mr-2"/>
+                                {{ team.slug }}
+                            </div>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </ng-template>
+    </div>
+</div>
+
+<ng-template #loading>
+    <div class="flex justify-center items-center w-full h-full">
+        <mat-spinner [diameter]="8" color="primary"></mat-spinner>
+    </div>
+</ng-template>
