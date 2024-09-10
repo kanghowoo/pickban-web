@@ -7,11 +7,12 @@ import { Player } from '../player.model';
 import { Ban } from '../ban.model';
 import { ActivatedRoute } from '@angular/router';
 import { MatchService } from '../match.service';
+import { LogoPathPipe } from "../logo-path.pipe";
 
 @Component({
   selector: 'app-pick-ban-result',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LogoPathPipe],
   templateUrl: './pick-ban-result.component.html',
   styleUrl: './pick-ban-result.component.css',
 })
