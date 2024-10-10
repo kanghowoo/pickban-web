@@ -13,24 +13,25 @@
             </div>        
         </div>
 
-        <div class="flex flex-col pt-10 space-y-4">
+        <div *ngIf="matches$ | async as matches; else loading" 
+            class="flex flex-col pt-10 space-y-4">
             <span class="text-white text-lg m-0.5">밴픽 예측하기</span>
             <div *ngFor="let match of matches; let i = index">
                 <div class="text-cardHeader p-1 font-bold space-x-2">
-                    <span>{{match.schedule}}</span><span><em>{{match.name}}</em></span>
+                    <span>{{match.schedule | schedule}}</span><span><em>{{match.name}}</em></span>
                     
                 </div>
-                <div routerLink="/simulation/match/{{match.id}}"
+                <div (click)="onMatchClick(match)"
                     class="prediction-card relative">
                     <div class="mr-auto flex items-center justify-center">
-                        <img class="w-13 h-13 object-contain m-2" [src]="match.home.slug | logoPath:'team'"/>
-                        <span>{{match.home.slug}}</span>
+                        <img class="w-13 h-13 object-contain m-2" [src]="match.homeTeam.slug | logoPath:'team'"/>
+                        <span>{{match.homeTeam.slug}}</span>
                     </div>
                     <div class="absolute left-1/2 transform -translate-x-1/2 text-lg
                         text-gradient-blue-to-red">VS</div>
                     <div class="flex flex-row-reverse items-center">
-                        <img class="w-13 h-13 object-contain m-2" [src]="match.away.slug | logoPath: 'team'"/>
-                        <span>{{match.away.slug}}</span>
+                        <img class="w-13 h-13 object-contain m-2" [src]="match.awayTeam.slug | logoPath: 'team'"/>
+                        <span>{{match.awayTeam.slug}}</span>
                     </div>
                 </div>    
             </div>
@@ -38,4 +39,10 @@
         </div>
 
     </div>
+
+    <ng-template #loading>
+        <div class="flex justify-center items-center w-full h-full">
+            <mat-spinner [diameter]="8" color="primary"></mat-spinner>
+        </div>
+    </ng-template>
 </main>
