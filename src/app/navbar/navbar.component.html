@@ -1,12 +1,12 @@
 <header>
-    <nav class="bg-gray-800 p-3">
+    <nav class="bg-home p-2 border-b border-white/30">
         <div class="container mx-auto flex justify-between items-center">
           <div class="text-white text-xl font-bold">
-            MyApp
+            <a routerLink="">My BanPick</a>
           </div>
           <ul class="flex space-x-4">
-            <li><a href="#" class="text-white hover:text-gray-300">Home</a></li>
-            <li><a href="#" class="text-white hover:text-gray-300">About</a></li>
+            <li><a routerLink="/auth/login" class="text-lg text-white hover:underline">
+              <span class="text-lg align-bottom mr-1 material-icons">login</span>로그인</a></li>
           </ul>
         </div>
     </nav>
