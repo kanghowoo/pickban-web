@@ -27,8 +27,27 @@
             bg-gradient-to-r from-blueTeam to-redTeam
     }
 
+    .card-button {
+        @apply w-full h-12 bg-card text-white rounded-md
+    }
+
+    .card-button:hover {
+        @apply bg-opacity-90;
+    }
+
+    .card-button:active {
+        @apply bg-opacity-85;
+    }
+
+    .invalid-form-data {
+        @apply absolute ml-1 mt-1 text-xs font-medium text-red-600
+    }
+
 }
 
+.swal2-custom-htmlContainer {
+    font-size: 1rem !important;
+}
 
 .diagonal-line {
     position: relative;
