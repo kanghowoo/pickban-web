@@ -6,6 +6,8 @@ import { SweetAlert2Module, SwalComponent,} from '@sweetalert2/ngx-sweetalert2';
 import { AuthService } from '../auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SwalService } from '../swal.service';
+import { ErrorCode, ErrorMessage } from '../error/error-codes';
+import { LoginRequest } from './schema/login-request.model';
 
 @Component({
   selector: 'app-login',
@@ -30,28 +32,32 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       // 폼 데이터 준비
-      const formData = this.loginForm.value;
+      const formData: LoginRequest = this.loginForm.value;
 
       // 로그인 서비스 호출
       this.authService.login(formData).subscribe({
         next: (response: any) => {
-          console.log('로그인 성공', response);
+          this.authService.setUser(response.body)
           // 성공 후 다른 페이지로 이동 (예: 홈 페이지)
           this.router.navigate(['/']);
         },
-        error: (error: any) => {
-          console.error('로그인 실패', error);
-          // 오류 처리 (필요에 따라 메시지 표시)
-          this.swalService.fireError("아이디나 비밀번호가 일치하지 않습니다.");
+        error: (response: any) => {
+          const errorCode = response.error.code as ErrorCode;
+
+          if (response.error.code === ErrorCode.LOGIN_AUTHENTICATION_FAILED) {
+            this.swalService.fireError("아이디나 비밀번호가 일치하지 않습니다.");
+          } else {
+            const errorMessage = ErrorMessage[ErrorCode.NOT_VERIFIED_USER];
+            this.swalService.fireError(errorMessage);
+          }
         }
       });
     } else {
-      // 유효성 검사 실패 시 SweetAlert2 팝업 띄우기
       const emailInvalid = this.loginForm.get('email')?.invalid;
       const passwordInvalid = this.loginForm.get('password')?.invalid;
 
       if (emailInvalid) {
-        this.swalService.fireError("올바른 이메일 형식을 입력하세요.");
+        this.swalService.fireError("이메일이 올바르지 않습니다.");
       } else if (passwordInvalid) {
         this.swalService.fireError("비밀번호는 최소 6자 이상이어야 합니다.");
       }

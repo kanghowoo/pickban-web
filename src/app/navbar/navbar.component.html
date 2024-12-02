@@ -5,34 +5,34 @@
             <a routerLink="">My BanPick</a>
           </div>
           <ul class="flex space-x-4">
-            <div *ngIf="!isLoggedIn; else loggedIn">
-              <a routerLink="/auth/login" class="text-lg text-white hover:underline">
-                <span class="text-lg align-bottom mr-1 material-icons">login</span>로그인
-              </a>
-            </div>
+            <div *ngIf="authService.userSubject$ | async as user; else loggedOut" class="relative inline-block text-left">
+              <!-- Account Button -->
+              <button (click)="toggleDropdown()" class="flex items-center gap-2 pl-3.5 pr-0.5 py-2 bg-inherit text-white">
+                <mat-icon>account_circle</mat-icon>
+                <mat-icon *ngIf="!isDropdownOpen">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="isDropdownOpen">keyboard_arrow_up</mat-icon>
+              </button>
             
-            <ng-template #loggedIn>
-              <div class="relative inline-block text-left">
-                <!-- Account Button -->
-                <button (click)="toggleDropdown()" class="flex items-center gap-2 pl-3.5 pr-0.5 py-2 bg-inherit text-white">
-                  <mat-icon>account_circle</mat-icon>
-                  <mat-icon *ngIf="!isDropdownOpen">keyboard_arrow_down</mat-icon>
-                  <mat-icon *ngIf="isDropdownOpen">keyboard_arrow_up</mat-icon>
-                </button>
-              
-                <!-- Dropdown Menu -->
-                <div *ngIf="isDropdownOpen" class="absolute right-0 mt-2.5 w-52 bg-inherit border border-white/30 shadow-lg z-10 text-white">
-                  <a routerLink="" class="px-4 py-2 flex items-center border-b
-                   border-white/30 hover:bg-card cursor-pointer text-white">
-                    <span class="w-16">내계정</span>
-                    <span class="pl-0.5 text-gray-400 text-sm truncate">{{nickname}}</span>
-                  </a>
-                  <!-- Menu Items -->
-                  <a href="#" class="block px-4 py-2 text-white hover:bg-card">
-                    <span class="">로그아웃</span>
-                  </a>
-                </div>
-              </div>              
+              <!-- Dropdown Menu -->
+              <div *ngIf="isDropdownOpen" class="absolute right-0 mt-2.5 w-52 bg-inherit border border-white/30 shadow-lg z-10 text-white">
+                <a routerLink="" class="px-4 py-2 flex items-center border-b
+                 border-white/30 text-white cursor-default">
+                  <span class="w-16">내계정</span>
+                  <span class="pl-0.5 text-gray-400 text-sm truncate">{{user.nickname}}</span>
+                </a>
+                <!-- Menu Items -->
+                <a (click)="logout()" class="block px-4 py-2 text-white hover:bg-card hover:cursor-pointer">
+                  <span class="">로그아웃</span>
+                </a>
+              </div>
+            </div>
+
+            <ng-template #loggedOut>
+              <div>
+                <a routerLink="/auth/login" class="text-lg text-white hover:underline hover:cursor-pointer">
+                  <span class="text-lg align-bottom mr-1 material-icons">login</span>로그인
+                </a>
+              </div>             
             </ng-template>
 
             
