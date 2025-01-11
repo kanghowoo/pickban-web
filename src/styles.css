@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 @layer components {
+    .pc-container {
+        @apply mx-auto;
+      }
+
     .prediction-card {
     @apply w-112 h-16 flex items-center px-1 bg-card
             rounded-2xl transition-colors duration-100

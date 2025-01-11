@@ -6,6 +6,7 @@ export const clause_routes: Routes = [
     {
         path: 'clause',
         loadComponent: () => import('./page/clause.component').then(m => m.ClauseComponent),
+        data: { showNavbar: true },
         children: [
             {
                 path: '',
@@ -15,12 +16,12 @@ export const clause_routes: Routes = [
             {
                 path: 'service',
                 component: ClauseServiceComponent,
-                data: { showNavbar: false },                   
+                title: 'My BanPick 마이밴픽 | 롤 모의 밴픽',                                
             },
             {
                 path: 'policy',
                 component: ClausePolicyComponent,
-                data: { showNavbar: false },
+                title: 'My BanPick 마이밴픽 | 롤 모의 밴픽'                
             }
 
         ]

@@ -24,6 +24,7 @@ module.exports = {
         '480px': '480px',
         'champioin-list': '33.75rem',
         'pick-ban-result': '74.25rem',
+        '320': '80rem',
       },
       height: {
         '108px': '108px',
@@ -54,5 +55,7 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animate')
+  ],
 };

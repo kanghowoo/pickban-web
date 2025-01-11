@@ -1,0 +1,9 @@
+.clause-item {
+  margin-bottom: -2px;
+  @apply items-center justify-center px-6 py-4;
+}
+
+.clause-item.active {
+  border-bottom: 2px solid #141517;
+  @apply font-bold;
+}
