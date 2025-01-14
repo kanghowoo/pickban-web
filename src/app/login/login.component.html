@@ -25,8 +25,9 @@
                         <span class="text-sm align-bottom mr-1 material-icons">lock_open</span>비밀번호를 잊으셨나요?</a>
                 </div>
                 <div>
-                    <button type="submit" class="card-button" >
-                        로그인
+                    <button type="submit" class="card-button" [disabled]="trying">
+                        <app-spinner *ngIf="trying" [size]="1.2" color="text-white"></app-spinner>
+                        <span *ngIf="!trying">로그인</span>
                     </button>
                 </div>
             </div>            

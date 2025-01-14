@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
-import { SimpleUser } from './user.model';
+import { SimpleUser, User } from './user.model';
 import { LoginRequest } from './login/schema/login-request.model';
 import { TokenService } from './token.service';
 
@@ -15,30 +15,53 @@ export class AuthService {
   
   private apiUrl = environment.apiUrl;
 
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  private simpleUserSubject = new BehaviorSubject<SimpleUser | null>(null);
+  private userSubject = new BehaviorSubject<User | null>(null);
+  userSubject$ = this.userSubject.asObservable();
 
-  isLoggedIn$ = this.isLoggedInSubject.asObservable();
-  simpleUserSubject$ = this.simpleUserSubject.asObservable();
+  private loggedIn = false;
 
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
   ) {}
 
-  login(formData: LoginRequest): Observable<any> {
+  isLoggedIn(): boolean {
+    return this.loggedIn;
+  }
+
+  getUser(): Observable<User | null> {
+    const token = this.tokenService.getAuthToken();
+    const userInfoUrl = this.apiUrl + "/users/me"
+    if (token) {
+      this.http.get<User>(userInfoUrl).subscribe(user => {
+        this.userSubject.next(user);
+      })
+    } else {
+      this.userSubject.next(null);
+    }
+
+    return this.userSubject$;
+    
+  }
+
+  login(data: LoginRequest): Observable<HttpResponse<User>> {
     const loginUrl = this.apiUrl + "/auth/login";
-    return this.http.post(loginUrl, formData)
+    return this.http.post<User>(loginUrl, data, {
+      observe: 'response',
+    })
       .pipe(
         tap((res) => {
-          
+          this.saveTokens(res);
+          const user = res.body;
+          this.setUser(user);
         })
       )
   }
 
   logout(): void {
-    this.isLoggedInSubject.next(false);
-    this.setSimpleUser(null);
+    this.tokenService.removeTokens();
+    this.loggedIn = false;
+    this.setUser(null);
   }
 
   signup(formData: any): Observable<any> {
@@ -46,14 +69,32 @@ export class AuthService {
     return this.http.post(signupUrl, formData);
   }
 
-  passwordForget(formData: any): Observable<any> {
-    const passwordForgetUrl = this.apiUrl + "/users/password/reset/send"
-    return this.http.post(passwordForgetUrl, formData);
+  setUser(user: User | null) {
+    this.loggedIn = user !== null;
+    this.userSubject.next(user);
   }
 
-  setSimpleUser(user: SimpleUser | null) {
-    this.isLoggedInSubject.next(user !== null);
-    this.simpleUserSubject.next(user);
+  refreshTokenFromServer(): Observable<boolean> {
+    const token = this.tokenService.getAuthToken()
+    const refreshToken = this.tokenService.getRefreshToken()
+
+    if (token === null || refreshToken === null) {
+      return throwError(new Error('no token in storage'))
+    }
+
+    return this.http.post<HttpResponse<object>>(
+      this.apiUrl + '/auth/token',
+      { token, refreshToken },
+      { withCredentials: true}
+    ).pipe(tap(this.renewToken.bind(this)), map(() => true))    
+  }
+
+  private renewToken(res: HttpResponse<object>): void {
+    const authTokenWithType = res.headers.get('Authorization')
+    if (authTokenWithType) {
+      const authToken = this.tokenService.removeTypePrefix(authTokenWithType)
+      this.tokenService.setAuthToken(authToken)
+    }    
   }
 
   private saveTokens(res: HttpResponse<object>): void {
@@ -61,9 +102,9 @@ export class AuthService {
     const refreshToken = res.headers.get(AuthService.REFRESH_TOKEN_HEADER_NAME)
 
     if (authTokenWithType && refreshToken) {
-      const authToken = this.tokenService.removeTypePrefix(authTokenWithType)
-      this.tokenService.setAuthToken(authToken)
-      this.tokenService.setRefreshToken(refreshToken)
+      const authToken = this.tokenService.removeTypePrefix(authTokenWithType);
+      this.tokenService.setAuthToken(authToken);
+      this.tokenService.setRefreshToken(refreshToken);
     }
   }    
 

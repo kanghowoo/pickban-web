@@ -1,0 +1,100 @@
+<body class="flex items-center justify-center min-h-screen">
+    <div *ngIf="!signupComplete"
+        class="bg-white border border-gray-300 shadow-lg rounded-lg p-8 w-full max-w-sm">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800">회원가입</h1>
+            <p class="mt-4 text-gray-600 text-sm">
+                My BanPick에 오신걸 환영합니다.<br>
+                회원가입 요청 후 이메일 인증이 진행됩니다.
+            </p>
+        </div>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="">
+                <!-- 이메일 입력 -->
+                <div class="relative mb-9">
+                    <input type="text" id="email" formControlName="email" autocomplete="off" class="peer w-full h-12 px-3 border border-gray-300 rounded-md focus:outline-none focus:border-gray-800"/>
+                    <label for="email" class="absolute left-3 top-3 text-gray-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-placeholder-shown:text-base transition-all peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-gray-500 bg-white px-1
+                     peer-valid:-top-2.5 peer-valid:text-xs">이메일</label>
+                    <div *ngIf="signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)">
+                        <small *ngIf="signupForm.get('email')?.errors?.['required']"
+                            class="invalid-form-data">이메일을 입력하세요.</small>
+                        <small *ngIf="signupForm.get('email')?.errors?.['email']"
+                            class="invalid-form-data">올바른 이메일 형식으로 입력하세요.</small>
+                    </div>
+                </div>
+
+                <!-- 비밀번호 입력 -->
+                <div class="relative mb-9">
+                    <input type="password" id="password" formControlName="password" autocomplete="off" class="peer w-full h-12 px-3 border border-gray-300 rounded-md focus:outline-none focus:border-gray-800"/>
+                    <label for="password" class="absolute left-3 top-3 text-gray-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-placeholder-shown:text-base transition-all peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-gray-500 bg-white px-1
+                     peer-valid:-top-2.5 peer-valid:text-xs">비밀번호</label>
+                    <div *ngIf="signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)">
+                        <small *ngIf="signupForm.get('password')?.errors?.['required'] || signupForm.get('password')?.errors?.['minlength']"
+                            class="invalid-form-data">비밀번호는 최소 6자 이상 이어야 합니다.</small>
+                    </div>
+                </div>
+
+                <!-- 닉네임 입력 -->
+                <div class="relative mb-10">
+                    <input type="text" id="nickname" formControlName="nickname" autocomplete="off" class="peer w-full h-12 px-3 border border-gray-300 rounded-md focus:outline-none focus:border-gray-800"/>
+                    <label for="nickname" class="absolute left-3 top-3 text-gray-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-500 peer-placeholder-shown:text-base transition-all peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-gray-500 bg-white px-1
+                     peer-valid:-top-2.5 peer-valid:text-xs">닉네임</label>
+                    <div *ngIf="signupForm.get('nickname')?.invalid && (signupForm.get('nickname')?.dirty || signupForm.get('nickname')?.touched)">
+                        <small *ngIf="signupForm.get('nickname')?.errors?.['required'] || 
+                            signupForm.get('nickname')?.errors?.['minlength'] || 
+                            signupForm.get('nickname')?.errors?.['maxlength']"
+                            class="invalid-form-data">닉네임은 최소 2자 이상, 10자 이하이어야 합니다.</small>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center ml-0.5 mb-10">
+                    <div class="flex items-center text-xs text-gray-600">
+                        <input type="checkbox" id="check" formControlName="agreement" class="mr-1 accent-gray-800">
+                        <label for="check" class="">[필수]</label>
+                        <div>
+                            <a href="/clause/service" target="_blank" rel="noopener noreferrer"
+                                class="ml-1 text-gray-800 underline cursor-pointer">이용약관</a>과 
+                            <a href="/clause/policy" target="_blank" rel="noopener noreferrer"
+                                class="text-gray-800 underline cursor-pointer">정보처리 취급방침</a>에 동의합니다.
+                        </div>
+                            
+                    </div>
+                </div>
+                <!-- 회원가입 버튼 -->
+                <div>
+                    <button type="submit" class="card-button" [disabled]="trying">
+                        <app-spinner *ngIf="trying" [size]="1.2" color="text-white"></app-spinner>
+                        <span *ngIf="!trying">회원가입</span>
+                    </button>
+                </div>
+                <div class="text-left mt-6">
+                    <p class="text-gray-600">
+                        <a routerLink="/auth/login" class="text-gray-800 hover:underline">
+                            <span class="text-base mr-1 align-bottom material-icons">login</span>로그인</a>
+                    </p>
+                </div>                
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="signupComplete"
+        class="bg-white border border-gray-300 shadow-lg rounded-lg p-8 w-full max-w-sm">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800">My BanPick</h1>
+            <div class="px-10 py-10">
+                <div class="font-bold text-xl mb-4">{{ email?.value }}으로<br />메일이 발송되었습니다.</div>
+                1시간 내에 메일에 명시된 링크를 클릭해야 인증을 완료하실 수 있습니다.
+                <div class="mt-10 mb-6 text-sm">
+                  이메일을 받지 못하셨나요?
+                </div>
+                <div>
+                    <button (click)="sendEmail()" class="card-button" [disabled]="trying">
+                        <app-spinner *ngIf="trying" [size]="1.2" color="text-white"></app-spinner>
+                        <span *ngIf="!trying">다시보내기</span>
+                    </button>
+                </div>    
+                
+              </div>            
+        </div>   
+    </div>
+
+</body>

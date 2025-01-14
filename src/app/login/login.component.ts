@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,16 +9,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { SwalService } from '../swal.service';
 import { ErrorCode, ErrorMessage } from '../error/error-codes';
 import { LoginRequest } from './schema/login-request.model';
+import { finalize } from 'rxjs';
+import { SpinnerComponent } from "../spinner/spinner.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule, HttpClientModule,SweetAlert2Module,],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, HttpClientModule, SweetAlert2Module, SpinnerComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  sendComplete = false;
+  trying = false;
 
   constructor(private fb: FormBuilder, private router: Router,
     private authService: AuthService,
@@ -30,13 +35,22 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    if (this.trying) {
+      return;
+    }
+
     if (this.loginForm.valid) {
       // 폼 데이터 준비
       const formData: LoginRequest = this.loginForm.value;
 
+      this.trying = true;
+
       // 로그인 서비스 호출
-      this.authService.login(formData).subscribe({
+      this.authService.login(formData)
+        .pipe(finalize(() => (this.trying = false)))
+        .subscribe({
         next: (response: any) => {
+          this.sendComplete = true;
           this.authService.setUser(response.body)
           // 성공 후 다른 페이지로 이동 (예: 홈 페이지)
           this.router.navigate(['/']);
