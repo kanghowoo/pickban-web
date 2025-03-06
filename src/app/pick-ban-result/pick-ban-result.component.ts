@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../data.service';
 import { ResultService } from '../result.service';
@@ -6,8 +6,8 @@ import { Team } from '../team.model';
 import { Player } from '../player.model';
 import { Ban } from '../ban.model';
 import { ActivatedRoute } from '@angular/router';
-import { MatchService } from '../match.service';
 import { LogoPathPipe } from "../logo-path.pipe";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pick-ban-result',
@@ -19,14 +19,18 @@ import { LogoPathPipe } from "../logo-path.pipe";
 export class PickBanOrderComponent implements OnInit {
 
   matchName: string = '';
-  blueTeam: Team | null = null;
-  redTeam: Team | null = null;
+  blueTeam$: Observable<Team | undefined> = new Observable<Team | undefined>(); 
+  redTeam$: Observable<Team | undefined> = new Observable<Team | undefined>();
+
+  blueTeamName: string = '';
+  redTeamName: string = '';
+
+  isMatch: boolean = false;
 
   constructor(
     private dataService: DataService,
     private resultService: ResultService,
     private route: ActivatedRoute,
-    private matchService: MatchService,
   ) {}
 
   bluePlayers: Player[] = [];
@@ -51,25 +55,30 @@ export class PickBanOrderComponent implements OnInit {
     this.dataService.initializedRedBansSubject$.subscribe(bans => {
       this.redBans = bans;
     });
+    
+    this.resultService.matchNameSubject$.subscribe(name => {
+      this.matchName = name;
+    });
+    
+    this.blueTeam$ = this.resultService.blueTeamSubject$;
+    this.redTeam$ = this.resultService.redTeamSubject$;
 
+    this.resultService.blueTeamNameSubject$.subscribe(
+      name => {
+        this.blueTeamName = name;
+      }
+    )
+    
+    this.resultService.redTeamNameSubject$.subscribe(
+      name => {
+        this.redTeamName = name;
+      }
+    )    
+    
     const matchId = this.route.snapshot.paramMap.get('matchId');
-    if (matchId) {
-      this.blueTeam = this.matchService.getMatch(matchId).home;
-      this.redTeam = this.matchService.getMatch(matchId).away;
-      this.matchName = this.matchService.getMatch(matchId).name;
-
-    } else {
-      this.resultService.matchNameSubject$.subscribe(name => {
-        this.matchName = name;
-      });
-      this.resultService.blueTeamNameSubject$.subscribe(team => {
-        this.blueTeam = team;
-      });
-      this.resultService.redTeamNameSubject$.subscribe(team => {
-        this.redTeam = team;
-      });      
+    if (matchId != null) {
+      this.isMatch = true;
     }
 
   }
-
 }

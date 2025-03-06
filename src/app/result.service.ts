@@ -7,31 +7,45 @@ import { Team } from './team.model';
 })
 export class ResultService {
   private matchNameSubject = new BehaviorSubject<string>('');
-  private blueTeamSubject = new BehaviorSubject<Team | null>(null);
-  private redTeamSubject = new BehaviorSubject<Team | null>(null);
+  private blueTeamSubject = new BehaviorSubject<Team | undefined>(undefined);
+  private redTeamSubject = new BehaviorSubject<Team | undefined>(undefined);
+
+  private blueTeamNameSubject = new BehaviorSubject<string>("");
+  private redTeamNameSubject = new BehaviorSubject<string>("");
 
   matchNameSubject$ = this.matchNameSubject.asObservable();
-  blueTeamNameSubject$ = this.blueTeamSubject.asObservable();
-  redTeamNameSubject$ = this.redTeamSubject.asObservable();
+  blueTeamSubject$ = this.blueTeamSubject.asObservable();
+  redTeamSubject$ = this.redTeamSubject.asObservable();
+
+  blueTeamNameSubject$ = this.blueTeamNameSubject.asObservable();
+  redTeamNameSubject$ = this.redTeamNameSubject.asObservable();
 
   constructor() { }
 
-  setMatchName(name: string) {
+  setMatchName(name: string | '') {
     this.matchNameSubject.next(name);
   }
 
-  setBlueTeam(team: Team | null) {
+  setBlueTeam(team: Team | undefined) {
     this.blueTeamSubject.next(team);
   }
 
-  setRedTeam(team: Team | null) {
+  setRedTeam(team: Team | undefined) {
     this.redTeamSubject.next(team);
+  }
+
+  setBlueTeamName(name: string) {
+    this.blueTeamNameSubject.next(name);
+  }
+
+  setRedTeamName(name: string) {
+    this.redTeamNameSubject.next(name);
   }
 
   initializeResult() {
     this.matchNameSubject.next('');
-    this.blueTeamSubject.next(null);
-    this.redTeamSubject.next(null);
+    this.blueTeamSubject.next(undefined);
+    this.redTeamSubject.next(undefined);
   }
 
 }

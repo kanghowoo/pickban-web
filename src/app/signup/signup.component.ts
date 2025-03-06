@@ -124,8 +124,13 @@ export class SignupComponent {
           this.swalService.fireSuccess(`${email}로 메일이 전송되었습니다.<br/>인증을 완료해주세요.`);
         },
         error: (response) => {
-          const alertMessage: string = response.error.alert?.text;
-          this.swalService.fireError('이메일 전송에 실패했습니다.', alertMessage);
+          //const alertMessage: string = response.error.alert?.text;
+
+          if (response.status == 429) {
+            this.swalService.fireError('이메일 발송 횟수 초과로 24시간 후에 재시도 가능합니다.');
+          } else {
+            this.swalService.fireError('이메일 전송에 실패했습니다.');
+          }
         }
       })
   }

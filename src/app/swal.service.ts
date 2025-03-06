@@ -20,17 +20,19 @@ export class SwalService {
   constructor() { }
 
 
-  public fire(options: any) {
-    return this.swalWithGlobalStyles.fire(options);
-  }
-
-  public fireError(inputText: string) {
+  public fireSuccess(inputText: string) {
     this.swalWithGlobalStyles.fire( {
-      text: inputText,
-      icon: "error",
+      html: inputText,
+      icon: "success",
     })
   }
 
-  // <swal #passwordValidationSwal text="비밀번호는 최소 6자 이상이어야 합니다." icon="error" confirmButtonText="확인"></swal>
+  public fireError(errorMessage: string, alertText?: string) {
+    errorMessage = alertText == null ? errorMessage : alertText;
+    this.swalWithGlobalStyles.fire({
+      html: errorMessage,
+      icon: "error",
+    })
+  }
 
 }

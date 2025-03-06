@@ -7,6 +7,10 @@ import { TeamBanComponent } from "../team-ban/team-ban.component";
 import { MatchInfoComponent } from "../match-info/match-info.component";
 import { ResultButtonComponent } from "../result-button/result-button.component";
 import { InitializeService } from '../initialize.service';
+import { MatchService } from '../match.service';
+import { ActivatedRoute } from '@angular/router';
+import { LeagueService } from '../league.service';
+import { Match } from '../match.model';
 
 @Component({
   selector: 'app-pick-ban',
@@ -17,13 +21,22 @@ import { InitializeService } from '../initialize.service';
   styleUrls: ['./pick-ban.component.css']
 })
 export class PickBanComponent implements OnInit {
-
   constructor(
     private initializeService: InitializeService,
+    private route: ActivatedRoute,
+    private matchService: MatchService,
+    private leagueService: LeagueService,
   ) {}
 
   ngOnInit(): void {
     this.initializeService.initializeAllComponent();
+
+    this.leagueService.getLeagues();
+    const matchId = this.route.snapshot.paramMap.get('matchId');
+
+    if (matchId != null) {
+      this.matchService.getMatchById(matchId);
+    }
   }
 
 }

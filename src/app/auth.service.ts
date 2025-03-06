@@ -48,6 +48,7 @@ export class AuthService {
     const loginUrl = this.apiUrl + "/auth/login";
     return this.http.post<User>(loginUrl, data, {
       observe: 'response',
+      withCredentials: true,
     })
       .pipe(
         tap((res) => {

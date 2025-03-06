@@ -9,7 +9,7 @@ bg-gradient-to-r from-blueTeam via-home to-redTeam">
                 type="text"
                 class="w-64 pt-2 justify-center bg-inherit outline-none
                 text-white text-center text-sm font-medium truncate"
-            >{{matchName}}
+            >{{ matchName | text: 'replaceBrWithSpace' }}
             </div>
         </div>
         <ng-template #customMatchName>
@@ -41,13 +41,24 @@ bg-gradient-to-r from-blueTeam via-home to-redTeam">
         <div class="flex-row-reverse pr-2 text-white text-sm">RED TEAM</div>
     </div>
     <!--team info-->
-    <div class="w-full h-full flex justify-between">
-        <app-match-team-info
-            team="blue">
-        </app-match-team-info>
-        <app-match-team-info
-            team="red">
-        </app-match-team-info>
+    <div class="w-full h-full flex justify-between items-center">
+        <ng-container>
+            <app-match-team-info
+                team="blue"
+                [isHomeTeamBlue]="isHomeTeamBlue">
+            </app-match-team-info>
+            <ng-container *ngIf="isMatch">
+                <div class="text-white">
+                    <mat-icon class="text-white cursor-pointer transition-transform transform hover:scale-105 
+                    active:scale-95 active:text-gray-500"
+                    (click)="onSwapIconClick()">swap_horizontal_circle</mat-icon>
+                </div>
+            </ng-container>
+            <app-match-team-info
+                team="red"
+                [isHomeTeamBlue]="isHomeTeamBlue">
+            </app-match-team-info>
+        </ng-container>
     </div>
 </div>
   

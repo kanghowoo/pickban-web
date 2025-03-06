@@ -3,16 +3,18 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ResultService } from '../result.service';
-import { DataService } from '../data.service';
 import { MatchService } from '../match.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatchTeamInfoComponent } from "../match-team-info/match-team-info.component";
+import { Match } from '../match.model';
+import { TextPipe } from '../text.pipe';
+
 @Component({
   selector: 'app-match-info',
   standalone: true,
   imports: [CommonModule, FormsModule, MatIconModule,
-    NgSelectModule, MatchTeamInfoComponent],
+    NgSelectModule, MatchTeamInfoComponent, TextPipe],
   templateUrl: './match-info.component.html',
   styleUrl: './match-info.component.css'
 })
@@ -20,10 +22,14 @@ export class MatchInfoComponent implements OnInit {
   @ViewChild('matchNameInput') matchNameInputRef!: ElementRef<HTMLInputElement>;
   nameMaxLength:  number = 20;
 
+  selectedMatch!: Match;
+
   isMatchNameFocused = false;
-  matchName: string = '';
+  matchName: string | '' = '';
 
   isMatch:boolean = false;
+  isHomeTeamBlue = true;
+
   constructor(
     private resultService: ResultService,
     private route: ActivatedRoute,
@@ -32,11 +38,15 @@ export class MatchInfoComponent implements OnInit {
 
   ngOnInit(): void {
     const matchId = this.route.snapshot.paramMap.get('matchId');
+
     if (matchId) {
       this.isMatch = true;
+      this.matchService.selectedMatch$.subscribe(
+        match => {
+          this.matchName = match?.name ?? '';
+        }
+      );
 
-      const selectedMatch = this.matchService.getMatch(matchId);
-      this.matchName = selectedMatch.name;
     }
   }
 
@@ -50,7 +60,7 @@ export class MatchInfoComponent implements OnInit {
   }
 
   updateMatchName() {
-    this.resultService.setMatchName(this.matchName);
+    this.resultService.setMatchName(this.matchName!);
     this.matchNameInputRef?.nativeElement.blur();
   }
 
@@ -62,5 +72,11 @@ export class MatchInfoComponent implements OnInit {
     this.matchName = '';
     this.matchNameInputRef?.nativeElement.focus();   
   }
+
+  onSwapIconClick() {
+    this.isMatch = true;
+
+    this.isHomeTeamBlue = !this.isHomeTeamBlue;
+  }  
 
 }

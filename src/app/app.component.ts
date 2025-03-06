@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, NavigationEnd, RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./navbar/navbar.component";
-import { PickBanComponent } from "./pick-ban/pick-ban.component";
-import { HomeComponent } from "./home/home.component";
+
 import { filter } from 'rxjs/operators';
 import { FooterComponent } from "./layout/footer/footer.component";
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, NavbarComponent, PickBanComponent, HomeComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -19,7 +19,12 @@ export class AppComponent {
   showNavbar: boolean = true;
   showFooter: boolean = true;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+      private router: Router,
+      private activatedRoute: ActivatedRoute,
+      private authService: AuthService) {
+    
+    this.authService.getUser();
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)).subscribe(() => {
         this.checkRoute();
