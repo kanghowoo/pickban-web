@@ -2,12 +2,13 @@
     <div class="w-112">
         <div class="flex flex-col items-center pt-10">
             <div class="mr-auto p-0.5">
-                <span class=" text-white text-lg m-0.5">밴픽 짜기</span>
+                <span class=" text-white text-lg m-0.5">나의 밴픽 짜기</span>
                 <div class="py-1">
                     <div routerLink="/simulation/custom"
                         class="prediction-card justify-center">
-                        <span>S T A R T</span>
+                        <span>C L I C K&nbsp;</span>
                         <mat-icon>arrow_forward</mat-icon>
+                        <!-- <span class="text-gray-400">준비중</span> -->
                     </div>
                 </div>
             </div>        
@@ -18,7 +19,8 @@
             <span class="text-white text-lg m-0.5">밴픽 예측하기</span>
             <div *ngFor="let match of matches; let i = index">
                 <div class="text-cardHeader p-1 font-bold space-x-2">
-                    <span>{{match.schedule | schedule}}</span><span><em>{{match.name}}</em></span>
+                    <span>{{match.schedule | schedule}}</span>
+                    <span><em>{{match.name | text: 'replaceBrWithSpace'}}</em></span>
                     
                 </div>
                 <div (click)="onMatchClick(match)"

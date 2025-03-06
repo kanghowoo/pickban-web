@@ -10,30 +10,37 @@ import { DatePipe } from "../date.pipe";
 import { Observable } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { TextPipe } from '../text.pipe';
+import { LeagueService } from '../league.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule, RouterModule,
-    LogoPathPipe, DatePipe, MatProgressSpinnerModule,
+    LogoPathPipe, DatePipe, MatProgressSpinnerModule, TextPipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  matches$: Observable<Match[]> = new Observable();
+
+  matches$: Observable<Match[]> = new Observable<Match[]>();
 
   constructor(
+    private leagueService: LeagueService,
     private matchService: MatchService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.matches$ = this.matchService.getPredictableMathces();
+    this.leagueService.getLeagues();
+    this.matchService.getPredictableMatches();
+
+    this.matches$ = this.matchService.matches$;
   }
 
   onMatchClick(match: Match): void {
-    this.matchService.getMatchById(match.id.toString());
+    //this.matchService.getMatchById(match.id.toString());
     this.router.navigate(['/simulation/matches/', match.id]);
   }
 }

@@ -1,0 +1,24 @@
+<div class="w-full max-w-5xl mx-auto p-4">
+    <h2 class="text-xl font-bold mb-4">전체 게시글</h2>
+    <table class="w-full border border-gray-300">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="border p-2">제목</th>
+          <th class="border p-2">작성자</th>
+          <th class="border p-2">작성일</th>
+          <th class="border p-2">조회수</th>
+          <th class="border p-2">댓글</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts" class="hover:bg-gray-50">
+          <td class="border p-2 text-blue-500 cursor-pointer">{{ post.title }}</td>
+          <td class="border p-2">{{ post.author }}</td>
+          <td class="border p-2">{{ post.date }}</td>
+          <td class="border p-2">{{ post.views }}</td>
+          <td class="border p-2">{{ post.comments }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+`

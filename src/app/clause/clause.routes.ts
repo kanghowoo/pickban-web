@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { ClauseServiceComponent } from "./page/service/clause-service/clause-service.component";
+import { ClauseServiceComponent } from "./page/service/clause-service.component";
 import { ClausePolicyComponent } from "./page/policy/clause-policy.component";
 
 export const clause_routes: Routes = [

@@ -1,1 +1,6 @@
-<p>verify works!</p>
+<div class="flex justify-center mt-10 h-screen text-white text-lg">
+    <p *ngIf="success">
+        인증이 완료 되었습니다.<br>
+        잠시후 로그인 페이지로 이동합니다. {{ countdown }}초</p>
+    <p *ngIf="!success">유효하지 않은 링크 입니다.</p>
+  </div>
