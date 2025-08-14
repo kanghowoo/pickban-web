@@ -43,3 +43,5 @@ Thumbs.db
 
 #util scripts
 /script
+
+src/environments/environment.prod.ts
