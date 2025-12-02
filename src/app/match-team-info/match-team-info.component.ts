@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Match } from '../match.model';
 import { FormsModule } from '@angular/forms';
 import { LeagueService } from '../league.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-match-team-info',
@@ -35,7 +36,7 @@ export class MatchTeamInfoComponent implements OnInit{
 
   teams: Team[] = [];
 
-  selectedLeague: League | undefined;
+  //selectedLeague: League | undefined;
   selectedTeam: Team | undefined;
   selectedMatch: Match | undefined;
 
@@ -43,7 +44,14 @@ export class MatchTeamInfoComponent implements OnInit{
   dropdownTeamVisible = false;
 
   isTeamNameFocused = false;
-  teamName: string | '' = '';  
+  teamName: string | '' = '';
+
+  match$ = this.matchService.selectedMatch$;
+  leagues$ = this.leagueService.leagues$;
+  selectedLeague$ = this.leagues$.pipe(
+    map(leagues => leagues.find(league => league.id === this.selectedTeam?.leagueId))
+  );
+  
 
   constructor(
     @Inject(ActivatedRoute) private route: ActivatedRoute,
@@ -66,11 +74,11 @@ export class MatchTeamInfoComponent implements OnInit{
     const matchId = this.route.snapshot.paramMap.get('matchId');
 
     if (matchId) {
-      this.matchService.selectedMatch$.subscribe(
+      this.match$.subscribe(
         match => {
           this.selectedMatch = match;
           this.selectedTeam = this.isBlueSide? match?.homeTeam : match?.awayTeam;
-          this.selectedLeague = this.leagues!.find(league => league.id === this.selectedTeam?.leagueId);
+          //this.selectedLeague = this.leagues!.find(league => league.id === this.selectedTeam?.leagueId);
 
           this.resultService.setBlueTeam(match?.homeTeam);
           this.resultService.setRedTeam(match?.awayTeam);
@@ -113,7 +121,9 @@ export class MatchTeamInfoComponent implements OnInit{
 
       }
       
-      this.selectedLeague = this.leagues!.find(league => league.id === this.selectedTeam?.leagueId);
+      this.selectedLeague$ = this.leagues$.pipe(
+        map(leagues => leagues.find(league => league.id === this.selectedTeam?.leagueId))
+      );
       this.cdr.detectChanges();
     }
   }
@@ -126,19 +136,19 @@ export class MatchTeamInfoComponent implements OnInit{
     )
   }
 
-  onLeagueChange(league: League) {
-    this.selectedLeague = league;
+  // onLeagueChange(league: League) {
+  //   this.selectedLeague = league;
 
-    if (this.selectedLeague) {
-      const selectedLeague = this.leagues!.find(league => league.id === this.selectedLeague?.id);
-      this.teams = selectedLeague ? selectedLeague.teams : [];
-    } else {
-      this.teams = [];
-    }
+  //   if (this.selectedLeague) {
+  //     const selectedLeague = this.leagues!.find(league => league.id === this.selectedLeague?.id);
+  //     this.teams = selectedLeague ? selectedLeague.teams : [];
+  //   } else {
+  //     this.teams = [];
+  //   }
 
-    this.selectedTeam = undefined;
-    this.dropdownLeagueVisible = false;
-  }
+  //   this.selectedTeam = undefined;
+  //   this.dropdownLeagueVisible = false;
+  // }
 
   onChangeTeam(team: Team) {
     this.selectedTeam = team;

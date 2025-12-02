@@ -3,13 +3,13 @@ bg-gradient-to-r from-blueTeam via-home to-redTeam">
     <!--match name-->
     <div class="flex justify-between">
         <div class="pl-2 text-white text-sm">BLUE TEAM</div>
-        <div *ngIf="isMatch; else customMatchName"
+        <div *ngIf="match$ | async as match; else customMatchName"
             class="relative flex items-center pl-2">
             <div
                 type="text"
                 class="w-64 pt-2 justify-center bg-inherit outline-none
                 text-white text-center text-sm font-medium truncate"
-            >{{ matchName | text: 'replaceBrWithSpace' }}
+            >{{ match.name | text: 'replaceBrWithSpace' }}
             </div>
         </div>
         <ng-template #customMatchName>
@@ -47,7 +47,7 @@ bg-gradient-to-r from-blueTeam via-home to-redTeam">
                 team="blue"
                 [isHomeTeamBlue]="isHomeTeamBlue">
             </app-match-team-info>
-            <ng-container *ngIf="isMatch">
+            <ng-container *ngIf="match$ | async as match">
                 <div class="text-white">
                     <mat-icon class="text-white cursor-pointer transition-transform transform hover:scale-105 
                     active:scale-95 active:text-gray-500"

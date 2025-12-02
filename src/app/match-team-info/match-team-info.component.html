@@ -4,14 +4,13 @@
             'space-x-reverse': isRedSide,
             'flex-row-reverse': isRedSide,
         }">
-        <div *ngIf="isMatch; else customTeamLeague" class="w-24">
-            <div *ngIf="leagues; else loading"
+        <div *ngIf="match$ | async as match; else customTeamLeague" class="w-24">
+            <div *ngIf="selectedLeague$ | async as selectedLeague; else loading"
                 class="my-1 w-full text-center text-white bg-inherit
                     outline-none text-sm font-medium flex items-center justify-center">
-                <img *ngIf="this.selectedLeague"
-                    [src]="selectedLeague.slug| logoPath:'league'"
+                <img [src]="selectedLeague.slug| logoPath:'league'"
                     class="w-8 h-8 pl-0.5"/>
-                {{ this.selectedLeague?.slug }}
+                {{ selectedLeague?.slug }}
             </div>
         </div>
         <ng-template #customTeamLeague>
@@ -81,7 +80,7 @@
         </div>        
         </ng-template>
 
-        <div *ngIf="isMatch; else customTeam" class="w-24">
+        <div *ngIf="match$ | async as match; else customTeam" class="w-24">
             <div class="my-1 w-full text-center text-white bg-inherit
                     outline-none text-sm font-medium flex items-center justify-center">
                 <img *ngIf="this.selectedTeam"

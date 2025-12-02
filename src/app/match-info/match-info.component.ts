@@ -7,7 +7,6 @@ import { MatchService } from '../match.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatchTeamInfoComponent } from "../match-team-info/match-team-info.component";
-import { Match } from '../match.model';
 import { TextPipe } from '../text.pipe';
 
 @Component({
@@ -22,7 +21,7 @@ export class MatchInfoComponent implements OnInit {
   @ViewChild('matchNameInput') matchNameInputRef!: ElementRef<HTMLInputElement>;
   nameMaxLength:  number = 20;
 
-  selectedMatch!: Match;
+  match$ = this.matchService.selectedMatch$;
 
   isMatchNameFocused = false;
   matchName: string | '' = '';
@@ -41,11 +40,11 @@ export class MatchInfoComponent implements OnInit {
 
     if (matchId) {
       this.isMatch = true;
-      this.matchService.selectedMatch$.subscribe(
-        match => {
-          this.matchName = match?.name ?? '';
-        }
-      );
+      // this.match$.subscribe(
+      //   match => {
+      //     this.matchName = match?.name ?? '';
+      //   }
+      // );
 
     }
   }
