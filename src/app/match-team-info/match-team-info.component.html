@@ -1,20 +1,26 @@
 <div class="flex flex-col h-full justify-end px-2">
-    <div class="flex items-center space-x-2"
-        [ngClass]="{
+  <div
+    class="flex items-center space-x-2"
+    [ngClass]="{
             'space-x-reverse': isRedSide,
             'flex-row-reverse': isRedSide,
-        }">
-        <div *ngIf="match$ | async as match; else customTeamLeague" class="w-24">
-            <div *ngIf="selectedLeague$ | async as selectedLeague; else loading"
-                class="my-1 w-full text-center text-white bg-inherit
-                    outline-none text-sm font-medium flex items-center justify-center">
-                <img [src]="selectedLeague.slug| logoPath:'league'"
-                    class="w-8 h-8 pl-0.5"/>
-                {{ selectedLeague?.slug }}
-            </div>
-        </div>
-        <ng-template #customTeamLeague>
-        <!-- <div class="relative w-24">
+        }"
+  >
+    <div *ngIf="match$ | async as match; else customTeamLeague" class="w-24">
+      <div
+        *ngIf="selectedLeague$ | async as selectedLeague; else loading"
+        class="my-1 w-full text-center text-white bg-inherit outline-none text-sm font-medium flex items-center justify-center"
+      >
+        <img
+          appHideMissing
+          [src]="selectedLeague.slug | logoPath : 'league'"
+          class="w-8 h-8 pl-0.5"
+        />
+        {{ selectedLeague?.slug }}
+      </div>
+    </div>
+    <ng-template #customTeamLeague>
+      <!-- <div class="relative w-24">
             <button id="league-select"
                (click)="toggleLeagueDropdown()"
                class="inline-flex flex-shrink-0 z-10 my-1 w-full p-1.5 text-center text-white border-b bg-inherit
@@ -50,87 +56,105 @@
                 </ul>
             </div>
         </div> -->
-        
-        <div class="relative flex items-center"
-            [ngClass]="{
+
+      <div
+        class="relative flex items-center"
+        [ngClass]="{
                 'pl-6' : isBlueSide,
-            }">
-            <input #teamNameInput
-                type="text" [placeholder]="this.setTeamNamePlaceholder()"
-                [(ngModel)]="teamName"
-                (focus)="onTeamNameFocus()"
-                (blur)="onTeamNameBlur()"
-                (keyup.enter)="updateTeamName()"
-                class="w-48 pt-2 justify-center bg-inherit border-b outline-none
-                    text-white text-center text-sm font-medium placeholder:text-gray-400/75
-                    truncate"
-                [maxLength]="nameMaxLength"
-            />
+            }"
+      >
+        <input
+          #teamNameInput
+          type="text"
+          [placeholder]="this.setTeamNamePlaceholder()"
+          [(ngModel)]="teamName"
+          (focus)="onTeamNameFocus()"
+          (blur)="onTeamNameBlur()"
+          (keyup.enter)="updateTeamName()"
+          class="w-48 pt-2 justify-center bg-inherit border-b outline-none text-white text-center text-sm font-medium placeholder:text-gray-400/75 truncate"
+          [maxLength]="nameMaxLength"
+        />
 
-            <mat-icon
-                (mousedown)="preventBlur($event)"
-                (click)="clearTeamName()"
-                [ngClass]="{
-                    'invisible': !isTeamNameFocused
-                }"
-                class="flex pt-1 pl-1 text-sm font-medium text-center text-gray-400/75
-                    cursor-pointer"            
-            >cancel
-            </mat-icon>
-        </div>        
-        </ng-template>
+        <mat-icon
+          (mousedown)="preventBlur($event)"
+          (click)="clearTeamName()"
+          [ngClass]="{
+            invisible: !isTeamNameFocused
+          }"
+          class="flex pt-1 pl-1 text-sm font-medium text-center text-gray-400/75 cursor-pointer"
+          >cancel
+        </mat-icon>
+      </div>
+    </ng-template>
 
-        <div *ngIf="match$ | async as match; else customTeam" class="w-24">
-            <div class="my-1 w-full text-center text-white bg-inherit
-                    outline-none text-sm font-medium flex items-center justify-center">
-                <img *ngIf="this.selectedTeam"
-                    [src]="this.selectedTeam.slug | logoPath:'team'"
-                    class="w-8 h-8 pl-0.5"/>
-                {{ this.selectedTeam?.slug}}    
-            </div>
-        </div>
-        <ng-template #customTeam>
-        <div class="relative w-24" [hidden]="!teams.length">
-            <button id="team-select"
-                    (click)="toggleTeamDropdown()"
-                    class="inline-flex flex-shrink-0 z-10 my-1 w-full p-1.5 text-center text-white border-b bg-inherit
-                           outline-none text-sm font-medium cursor-pointer items-center" type="button">
-                <div class="mx-auto">
-                    <!-- 선택된 팀이 있을 경우 해당 팀의 이름과 로고를 표시 -->
-                    <ng-container *ngIf="selectedTeam; else selectTeamText">
-                        <img [src]="selectedTeam.slug | logoPath:'team'" class="w-5 h-5 inline-block mr-2">
-                        {{ selectedTeam.slug }}
-                    </ng-container>
-                    <ng-template #selectTeamText>팀 선택</ng-template>                        
-                </div>
-                <mat-icon class="w-2 h-2 ml-auto">keyboard_arrow_down</mat-icon>
-
-            </button>
-            
-            <div id="dropdown-team"
-                 [hidden]="!dropdownTeamVisible"
-                 class="absolute z-10 w-full bg-card rounded-lg">
-                <ul class="py-2 text-sm text-white" aria-labelledby="team-select">
-                    <li *ngFor="let team of teams">
-                        <button type="button"
-                            (click)="onChangeTeam(team)"
-                            class="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-600">
-                            <div class="inline-flex items-center">
-                                <img *ngIf="team"
-                                    [src]="team.slug | logoPath:'team'" class="w-5 h-5 pl-0.5 inline-block mr-2"/>
-                                {{ team.slug }}
-                            </div>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        </ng-template>
+    <div *ngIf="match$ | async as match; else customTeam" class="w-24">
+      <div
+        class="my-1 w-full text-center text-white bg-inherit outline-none text-sm font-medium flex items-center justify-center"
+      >
+        <img
+          *ngIf="this.selectedTeam"
+          appHideMissing
+          [src]="this.selectedTeam.slug | logoPath : 'team'"
+          class="w-8 h-8 pl-0.5"
+        />
+        {{ this.selectedTeam?.slug }}
+      </div>
     </div>
+    <ng-template #customTeam>
+      <div class="relative w-24" [hidden]="!teams.length">
+        <button
+          id="team-select"
+          (click)="toggleTeamDropdown()"
+          class="inline-flex flex-shrink-0 z-10 my-1 w-full p-1.5 text-center text-white border-b bg-inherit outline-none text-sm font-medium cursor-pointer items-center"
+          type="button"
+        >
+          <div class="mx-auto">
+            <!-- 선택된 팀이 있을 경우 해당 팀의 이름과 로고를 표시 -->
+            <ng-container *ngIf="selectedTeam; else selectTeamText">
+              <img
+                appHideMissing
+                [src]="selectedTeam.slug | logoPath : 'team'"
+                class="w-5 h-5 inline-block mr-2"
+              />
+              {{ selectedTeam.slug }}
+            </ng-container>
+            <ng-template #selectTeamText>팀 선택</ng-template>
+          </div>
+          <mat-icon class="w-2 h-2 ml-auto">keyboard_arrow_down</mat-icon>
+        </button>
+
+        <div
+          id="dropdown-team"
+          [hidden]="!dropdownTeamVisible"
+          class="absolute z-10 w-full bg-card rounded-lg"
+        >
+          <ul class="py-2 text-sm text-white" aria-labelledby="team-select">
+            <li *ngFor="let team of teams">
+              <button
+                type="button"
+                (click)="onChangeTeam(team)"
+                class="inline-flex w-full px-4 py-2 text-sm text-white hover:bg-gray-600"
+              >
+                <div class="inline-flex items-center">
+                  <img
+                    appHideMissing
+                    *ngIf="team"
+                    [src]="team.slug | logoPath : 'team'"
+                    class="w-5 h-5 pl-0.5 inline-block mr-2"
+                  />
+                  {{ team.slug }}
+                </div>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-template>
+  </div>
 </div>
 
 <ng-template #loading>
-    <div class="flex justify-center items-center w-full h-full">
-        <mat-spinner [diameter]="8" color="primary"></mat-spinner>
-    </div>
+  <div class="flex justify-center items-center w-full h-full">
+    <mat-spinner [diameter]="8" color="primary"></mat-spinner>
+  </div>
 </ng-template>

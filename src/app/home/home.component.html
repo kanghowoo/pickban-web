@@ -1,50 +1,65 @@
 <main class="bg-home min-h-screen flex flex-col items-center">
-    <div class="w-112">
-        <div class="flex flex-col items-center pt-10">
-            <div class="mr-auto p-0.5">
-                <span class=" text-white text-lg m-0.5">나의 밴픽 짜기</span>
-                <div class="py-1">
-                    <div routerLink="/simulation/custom"
-                        class="prediction-card justify-center">
-                        <span>C L I C K&nbsp;</span>
-                        <mat-icon>arrow_forward</mat-icon>
-                        <!-- <span class="text-gray-400">준비중</span> -->
-                    </div>
-                </div>
-            </div>        
+  <div class="w-112">
+    <div class="flex flex-col items-center pt-10">
+      <div class="mr-auto p-0.5">
+        <span class="text-white text-lg m-0.5">나의 밴픽 짜기</span>
+        <div class="py-1">
+          <div
+            routerLink="/simulation/custom"
+            class="prediction-card justify-center"
+          >
+            <span>C L I C K&nbsp;</span>
+            <mat-icon>arrow_forward</mat-icon>
+            <!-- <span class="text-gray-400">준비중</span> -->
+          </div>
         </div>
-
-        <div *ngIf="matches$ | async as matches; else loading" 
-            class="flex flex-col pt-10 space-y-4">
-            <span class="text-white text-lg m-0.5">밴픽 예측하기</span>
-            <div *ngFor="let match of matches; let i = index">
-                <div class="text-cardHeader p-1 font-bold space-x-2">
-                    <span>{{match.schedule | schedule}}</span>
-                    <span><em>{{match.name | text: 'replaceBrWithSpace'}}</em></span>
-                    
-                </div>
-                <div (click)="onMatchClick(match)"
-                    class="prediction-card relative">
-                    <div class="mr-auto flex items-center justify-center">
-                        <img class="w-13 h-13 object-contain m-2" [src]="match.homeTeam.slug | logoPath:'team'"/>
-                        <span>{{match.homeTeam.slug}}</span>
-                    </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 text-lg
-                        text-gradient-blue-to-red">VS</div>
-                    <div class="flex flex-row-reverse items-center">
-                        <img class="w-13 h-13 object-contain m-2" [src]="match.awayTeam.slug | logoPath: 'team'"/>
-                        <span>{{match.awayTeam.slug}}</span>
-                    </div>
-                </div>    
-            </div>
-      
-        </div>
-
+      </div>
     </div>
 
-    <ng-template #loading>
-        <div class="flex justify-center items-center w-full h-full">
-            <mat-spinner [diameter]="8" color="primary"></mat-spinner>
+    <div
+      *ngIf="matches$ | async as matches; else loading"
+      class="flex flex-col pt-10 space-y-4"
+    >
+      <span class="text-white text-lg m-0.5">밴픽 예측하기</span>
+      <div *ngFor="let match of matches; let i = index">
+        <div class="text-cardHeader p-1 font-bold space-x-2">
+          <span>{{ match.schedule | schedule }}</span>
+          <span
+            ><em>{{ match.name | text : "replaceBrWithSpace" }}</em></span
+          >
         </div>
-    </ng-template>
+        <div (click)="onMatchClick(match)" class="prediction-card relative">
+          <div class="mr-auto flex items-center justify-center">
+            <img
+              *ngIf="match.homeTeam.slug"
+              appHideMissing
+              class="w-13 h-13 object-contain m-2"
+              [src]="match.homeTeam.slug | logoPath : 'team'"
+            />
+            <span>{{ match.homeTeam.slug }}</span>
+          </div>
+          <div
+            class="absolute left-1/2 transform -translate-x-1/2 text-lg text-gradient-blue-to-red"
+          >
+            VS
+          </div>
+          <div class="flex flex-row-reverse items-center">
+            <img
+              *ngIf="match.awayTeam.slug"
+              appHideMissing
+              class="w-13 h-13 object-contain m-2"
+              [src]="match.awayTeam.slug | logoPath : 'team'"
+            />
+            <span>{{ match.awayTeam.slug }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div class="flex justify-center items-center w-full h-full">
+      <mat-spinner [diameter]="8" color="primary"></mat-spinner>
+    </div>
+  </ng-template>
 </main>
